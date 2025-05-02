@@ -1,0 +1,42 @@
+[build-system]
+requires = ["flit_core >=3.2,<4"]
+build-backend = "flit_core.buildapi"
+
+[project]
+name = "guacamoliency"
+version = "0.0.1"
+description = "Study of saliency map of MolGPT transformer for MOSES and Guacamol dataset"
+authors = [
+  { name = "LBT" },
+]
+license = { file = "LICENSE" }
+readme = "README.md"
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: MIT License"
+]
+dependencies = [
+    "loguru",
+    "mkdocs",
+    "pip",
+    "pytest",
+    "python-dotenv",
+    "ruff",
+    "tqdm",
+    "typer",
+]
+requires-python = "~=3.10.0"
+
+
+[tool.ruff]
+line-length = 99
+src = ["guacamoliency"]
+include = ["pyproject.toml", "guacamoliency/**/*.py"]
+
+[tool.ruff.lint]
+extend-select = ["I"]  # Add import sorting
+
+[tool.ruff.lint.isort]
+known-first-party = ["guacamoliency"]
+force-sort-within-sections = true
+
