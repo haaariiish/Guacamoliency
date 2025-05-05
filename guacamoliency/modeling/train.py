@@ -51,25 +51,20 @@ def tokenize_func(examples):
 
 @app.command()
 def main(
-    # ---- REPLACE DEFAULT PATHS AS APPROPRIATE ----
-    features_path: Path = PROCESSED_DATA_DIR / "features.csv",
-    labels_path: Path = PROCESSED_DATA_DIR / "labels.csv",
-    model_path: Path = MODELS_DIR / "model.pkl",
-    # -----------------------------------------
 ):
     parser = argparse.ArgumentParser()
 
-    parser.add_argument('--datasets', type = str, default='moses2',
+    parser.add_argument('--datasets', type = str, default='moses',
                         help="which datasets to use for the training", required=True)
     parser.add_argument('--output_dir', type = str, default='results',
                         help="where save our outputs", required=False)
     args = parser.parse_args()
     #configure tokenizer
-    tokenizer = configure_tokenizer("model/tokenizer/"+args.datasets+"_tokenizer/tokenizer.json")
+    tokenizer = configure_tokenizer("data/tokenizers/"+args.datasets+"_tokenizer/tokenizer.json")
 
     #load datasets
     
-    data_set = pd.read_csv("datasets/"+args.datasets+".csv")
+    data_set = pd.read_csv("data/interim/"+args.datasets+".csv")
     training_set = data_set[data_set['SPLIT']=='train']
 
     
@@ -157,9 +152,8 @@ def main(
 
 
     trainer.train()
-    trainer.save_metrics(args.output_dir+"/trained_"+args.datasets)
-    tokenizer.save_pretrained("model/tokenizer/"+args.datasets+"_tokenizer_trained")
-    trainer.save_model("model/trained_"+args.datasets)
+    tokenizer.save_pretrained("data/tokenizers/"+args.datasets+"_tokenizer_trained")
+    trainer.save_model("models/trained_"+args.datasets)
 
 if __name__ == "__main__":
     app()
