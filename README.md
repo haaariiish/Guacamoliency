@@ -59,3 +59,21 @@ Study of saliency map of MolGPT transformer for MOSES and Guacamol dataset
 
 --------
 
+
+## change in the folder 
+
+guacamoliency/modeling/train.py 
+
+notebooks/anaysis_vocab.ipynb
+
+launch_training_moses.sh
+
+run.pbs
+
+guacamoliency/generate_tokenizerBEP.py
+
+data/interim
+
+data/tokenizers
+
+how the workflow works

@@ -4,8 +4,8 @@
 
 rule datasets:
     params:
-        datasets : "moses" 
-    , output_dir : "data/interim"
+        datasets : "moses",
+        output_dir : "data/processed"
     shell:
         "python guacamoliency/dataset.py --datasets {params.datasets} --output_dir {params.output_dir}"
 

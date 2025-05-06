@@ -16,12 +16,9 @@ app = typer.Typer()
 
 @app.command()
 def main(
-    # ---- REPLACE DEFAULT PATHS AS APPROPRIATE ----
-    #input_path: Path = PROCESSED_DATA_DIR / "dataset.csv",
-    #output_path: Path = PROCESSED_DATA_DIR / "features.csv",
-    # -----------------------------------------
+
 ):
-    # ---- REPLACE THIS WITH YOUR OWN CODE ----
+   
 
    
     guacamol = pd.read_csv('data/interim/guacamol.csv')
