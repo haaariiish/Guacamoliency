@@ -106,8 +106,13 @@
     module load miniconda-py3/latest
      
     ## your app calls
-    source activate ton_env_conda 
-    bash train.sh
+    source activate env_moses
+
+    
+    tensorboard --logdir=results/logs/moses2_BPEtokens --host=0.0.0.0 --port=6006 &
+
+
+    bash launch_training_moses.sh
      
     ## To well chain your jobs, with afterok directive to be sure the current job will complete and OK before running the new one
     # qsub -d `/shared/scripts/getWorkdir.sh` -W depend=afterok:$PBS_JOBID <jobscript>

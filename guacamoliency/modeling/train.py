@@ -60,7 +60,7 @@ def main(
                         help="where save our outputs", required=False)
     args = parser.parse_args()
     #configure tokenizer
-    tokenizer = configure_tokenizer("data/tokenizers/"+args.datasets+"_tokenizer/tokenizer.json")
+    tokenizer = configure_tokenizer("data/tokenizers/"+args.datasets+"/tokenizer.json")
 
     #load datasets
     
@@ -121,7 +121,7 @@ def main(
             per_device_train_batch_size=128,
             save_steps=10_000,
             save_total_limit=3,
-            logging_dir=f"{args.output_dir}/logs",
+            logging_dir=f"{args.output_dir}/logs/"+args.datasets,
             report_to="tensorboard",
             logging_steps=10_000,
             warmup_steps=10_000,
@@ -152,7 +152,7 @@ def main(
 
 
     trainer.train()
-    tokenizer.save_pretrained("data/tokenizers/"+args.datasets+"_tokenizer_trained")
+    tokenizer.save_pretrained("data/tokenizers/"+args.datasets+"_trained")
     trainer.save_model("models/trained_"+args.datasets)
 
 if __name__ == "__main__":
