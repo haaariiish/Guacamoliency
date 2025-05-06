@@ -7,7 +7,7 @@
     #PBS -q gpu_40c_1n
     #PBS -l nodes=1:ppn=40
     #PBS -l walltime=12:00:00
-    #PBS -A simlab_team
+    #PBS -A simlab_project
      
     #PBS -m abe
     #PBS -M prabakaran@ibpc.fr

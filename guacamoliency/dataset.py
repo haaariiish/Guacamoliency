@@ -1,8 +1,11 @@
 from pathlib import Path
-
+import moses 
+from guacamol import SMILESDataset
+import argparse
 from loguru import logger
 from tqdm import tqdm
 import typer
+import pandas as pd
 
 from guacamoliency.config import PROCESSED_DATA_DIR, RAW_DATA_DIR
 
@@ -10,20 +13,38 @@ app = typer.Typer()
 
 
 @app.command()
-def main(
-    # ---- REPLACE DEFAULT PATHS AS APPROPRIATE ----
-    input_path: Path = RAW_DATA_DIR / "dataset.csv",
-    output_path: Path = PROCESSED_DATA_DIR / "dataset.csv",
-    # ----------------------------------------------
-):
-    # ---- REPLACE THIS WITH YOUR OWN CODE ----
-    logger.info("Processing dataset...")
-    for i in tqdm(range(10), total=10):
-        if i == 5:
-            logger.info("Something happened for iteration 5.")
-    logger.success("Processing dataset complete.")
-    # -----------------------------------------
+def main():
+    parser = argparse.ArgumentParser()
+
+    parser.add_argument('--datasets', type = str, default='moses',
+                        help="which datasets to use for the training", required=True)
+    parser.add_argument('--output_dir', type = str, default='data/interim',
+                        help="where save our outputs", required=False)
+    args = parser.parse_args()
+
+    if args.datasets == 'moses':
+        train = moses.get_dataset('train')
+        test = moses.get_dataset('test')
+        test_scaffolds = moses.get_dataset('test_scaffolds')
+        SPLIT = []
+        for k in range(len(test) + len(train)+len(test_scaffolds)):
+            if k< len(train) : 
+                SPLIT.append("train")
+            elif k>= len(train) and k< len(train)+len(test):
+                SPLIT.append("test")
+            else :
+                SPLIT.append("test_scaffolds")
+        smiles = train + test + test_scaffolds
+
+        dataset = pd.DataFrame({"SMILES":smiles
+                                ,"SPLIT": SPLIT})
+    
+    elif args.datasets == 'guacamol':
+        dataset = SMILESDataset(path_to_file)
+        smiles_list = dataset.smiles
 
 
+
+    dataset.to_csv(args.output_dir + "/" + args.datasets)
 if __name__ == "__main__":
     app()
