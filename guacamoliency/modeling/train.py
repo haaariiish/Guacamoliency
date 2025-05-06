@@ -56,7 +56,7 @@ def main(
 
     parser.add_argument('--datasets', type = str, default='moses',
                         help="which datasets to use for the training", required=True)
-    parser.add_argument('--output_dir', type = str, default='results',
+    parser.add_argument('--output_dir', type = str, default='reports',
                         help="where save our outputs", required=False)
     args = parser.parse_args()
     #configure tokenizer
