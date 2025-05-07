@@ -2,17 +2,12 @@ from pathlib import Path
 import moses 
 from guacamol import SMILESDataset
 import argparse
-from loguru import logger
+
 from tqdm import tqdm
-import typer
+
 import pandas as pd
 
-from guacamoliency.config import PROCESSED_DATA_DIR, RAW_DATA_DIR
 
-app = typer.Typer()
-
-
-@app.command()
 def main():
     parser = argparse.ArgumentParser()
 
@@ -47,4 +42,4 @@ def main():
 
     dataset.to_csv(args.output_dir + "/" + args.datasets)
 if __name__ == "__main__":
-    app()
+    main()

@@ -1,8 +1,8 @@
 from pathlib import Path
 
-from loguru import logger
+
 from tqdm import tqdm
-import typer
+
 
 from transformers import TrainingArguments
 from transformers import GPT2Config
@@ -17,13 +17,16 @@ from torch import nn
 import torch
 from datasets import Dataset
 
+from functools import partial
 
 
 
 
-from guacamoliency.config import MODELS_DIR, PROCESSED_DATA_DIR
 
-app = typer.Typer()
+
+#from guacamoliency.config import MODELS_DIR, PROCESSED_DATA_DIR
+
+
 
 
 
@@ -35,27 +38,37 @@ def configure_tokenizer(tokenizer_path):
     tokenizer.eos_token = "<eos>"
     return tokenizer
 
-def tokenize_func(examples):
+def tokenize_func(examples, tokenizer):
     smiles = examples["SMILES"]
     smiles = [str(s) for s in smiles if isinstance(s, str) or s is not None]
-    
-    tokenized = tokenizer(
+
+    return tokenizer(
         smiles, 
         padding="max_length", 
         truncation=True, 
         max_length=128
     )
 
+"""def tokenize_func(examples):
+    smiles = examples["SMILES"]
+    smiles = [str(s) for s in smiles if isinstance(s, str) or s is not None]
 
+    tokenized = tokenizer(
+        smiles, 
+        padding="max_length", 
+        truncation=True, 
+        max_length=128
+    )
     return tokenized
 
-@app.command()
-def main(
-):
-    parser = argparse.ArgumentParser()
+"""
 
+def main():
+
+
+    parser = argparse.ArgumentParser()
     parser.add_argument('--datasets', type = str, default='moses',
-                        help="which datasets to use for the training", required=True)
+                    help="which datasets to use for the training", required=True)
     parser.add_argument('--output_dir', type = str, default='reports',
                         help="where save our outputs", required=False)
     args = parser.parse_args()
@@ -79,11 +92,13 @@ def main(
 
     eval_set = Dataset.from_pandas(eval_set)
 
-
+    encoded_training_set = training_set.map(partial(tokenize_func, tokenizer=tokenizer), batched=True, remove_columns=["SMILES"])
     #encoded_training_set = training_set.map(tokenize_func, batched=True, remove_columns=["SMILES"])
+   
+    encoded_eval_set = eval_set.map(partial(tokenize_func, tokenizer=tokenizer), batched=True, remove_columns=eval_set.column_names)
 
-    encoded_eval_set = eval_set.map(tokenize_func, batched=True, remove_columns=eval_set.column_names)
-    encoded_training_set = encoded_eval_set
+    #encoded_eval_set = eval_set.map(tokenize_func, batched=True, remove_columns=eval_set.column_names)
+    #encoded_training_set = encoded_eval_set
 
 
     vocab_size = tokenizer.vocab_size
@@ -120,7 +135,7 @@ def main(
             max_steps=100_000,
             per_device_train_batch_size=128,
             save_steps=10_000,
-            save_total_limit=3,
+            save_total_limit=6,
             logging_dir=f"{args.output_dir}/logs/"+args.datasets,
             report_to="tensorboard",
             logging_steps=10_000,
@@ -156,4 +171,4 @@ def main(
     trainer.save_model("models/trained_"+args.datasets)
 
 if __name__ == "__main__":
-    app()
+    main()

@@ -1,12 +1,12 @@
     #!/bin/bash
     #PBS -S /bin/bash
-    #PBS -N training_transformer_models
-    #PBS -o training_transformer_models.out
-    #PBS -e training_transformer_models.err
+    #PBS -N training_transformer_models1
+    #PBS -o training_transformer_models1.out
+    #PBS -e training_transformer_models1.err
      
-    #PBS -q gpu_40c_1n
-    #PBS -l nodes=1:ppn=40
-    #PBS -l walltime=12:00:00
+    #PBS -q alphafold2_1n 
+    #PBS -l nodes=1:ppn=48
+    #PBS -l walltime=20:00:00
     #PBS -A simlab_project
      
     #PBS -m abe
@@ -109,7 +109,7 @@
     source activate env_moses
 
     
-    tensorboard --logdir=results/logs/moses2_BPEtokens --host=0.0.0.0 --port=6006 &
+    tensorboard --logdir=results/logs/moses2_BPEtokens --host=0.0.0.0 --port=6007 &
 
 
     bash launch_training_moses.sh
