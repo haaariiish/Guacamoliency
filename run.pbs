@@ -31,7 +31,7 @@
             fi       
      
             # if you need to check your job output during execution (example: each hour) you can uncomment the following line
-            # /shared/scripts/ADMIN__auto-rsync.example 3600 &
+                /shared/scripts/ADMIN__auto-rsync.example 1800 &
     fi
      
     echo "your current dir is: $PBS_O_WORKDIR"

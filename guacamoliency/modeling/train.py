@@ -92,7 +92,7 @@ def main():
 
     eval_set = Dataset.from_pandas(eval_set)
 
-    encoded_training_set = training_set.map(partial(tokenize_func, tokenizer=tokenizer), batched=True, remove_columns=["SMILES"])
+    encoded_training_set = training_set.map(partial(tokenize_func, tokenizer=tokenizer), batched=True,  remove_columns=training_set.column_names)
     #encoded_training_set = training_set.map(tokenize_func, batched=True, remove_columns=["SMILES"])
    
     encoded_eval_set = eval_set.map(partial(tokenize_func, tokenizer=tokenizer), batched=True, remove_columns=eval_set.column_names)
