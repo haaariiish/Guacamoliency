@@ -1,15 +1,16 @@
-from snakemake import snakemake
+import subprocess
+import sys
 
-success = snakemake(
-    snakefile="workflow.smk",          # chemin vers ton Snakefile
-    cores=20,                        # nombre de cœurs à utiliser
-    workdir=".",                    # répertoire de travail
-    use_conda=False,                # active conda si besoin
-    verbose=True,                   # verbosité
-    dryrun=True                    # True pour tester sans exécuter
-)
+result = subprocess.run([
+    sys.executable, 
+    "-m", "snakemake",
+    "-s", "workflow.smk",
+    "--cores", "20",
+    "--verbose",
+    "--rerun-incomplete"
+])
 
-if success:
+if result.returncode == 0:
     print("Pipeline exécuté avec succès.")
 else:
     print("Erreur dans le pipeline.")

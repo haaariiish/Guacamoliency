@@ -1,36 +1,40 @@
+dataset = "moses"
+dir_dataset = "data/processed"
 
+rule all:
+    input:
+        f"{dir_dataset}/{dataset}.csv",
+        "notebooks/analysis_tokenizer_vocab_done.flag",
+        "notebooks/analysis_tokenizer_vocab_done.ipynb",
+        f"models/trained_{dataset}/model.pt"
 
-# generate a dataset, "moses" or "guacamol" Benchmark
-
+# Generate a dataset: "moses" or "guacamol" benchmark
 rule datasets:
-    params:
-        datasets : "moses",
-        output_dir : "data/processed"
+    output:
+        f"{dir_dataset}/{dataset}.csv"
     shell:
-        "python guacamoliency/dataset.py --datasets {params.datasets} --output_dir {params.output_dir}"
+        "python guacamoliency/dataset.py --datasets " + dataset + " --output_dir " + dir_dataset + " > {output}"
 
-# generate BPE tokenizer
+# Generate BPE tokenizer
 rule tokenizer:
+    output:
+        f"data/tokenizers/{dataset}/tokenizer.json"
     shell:
-        "python guacamoliency/generate_tokenizerBEP.py"
+        "python guacamoliency/generate_tokenizerBEP.py > {output}"
 
-# analysis of tokenizer vocab 
-
+# Analysis of tokenizer vocab
 rule vocab_analysis:
-    notebook:
-        "notebooks/analysis_vocab.ipynb"
+    output:
+        "notebooks/analysis_tokenizer_vocab_done.ipynb",
+        "notebooks/analysis_tokenizer_vocab_done.flag"
+    shell:
+        "papermill notebooks/analysis_tokenizer_vocab.ipynb {output[0]} && touch {output[1]}"
 
-
-
-# Then train a model from scratch, using huggingface
-
-# training script
+# Train a model from scratch using Huggingface
 rule train:
     params:
-        datasets : "moses",
-        output_dir : "reports"
-        
+        output_dir = "reports"
+    output:
+        f"models/trained_{dataset}/model.pt"
     shell:
-        "python guacamoliency/modeling/train.py --datasets {params.datasets} --output_dir {params.output_dir}"
-
-# Restera ensuite la generation de SMILES et les analyses de validité etc
+        "python guacamoliency/modeling/train.py --datasets " + dataset + " --output_dir {params.output_dir} > {output}"
