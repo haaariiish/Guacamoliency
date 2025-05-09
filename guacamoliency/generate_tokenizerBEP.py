@@ -1,8 +1,8 @@
 from pathlib import Path
 
-from loguru import logger
+
 from tqdm import tqdm
-import typer
+
 
 from tokenizers import Tokenizer, models, pre_tokenizers, trainers
 from tokenizers.pre_tokenizers import Split
@@ -11,20 +11,21 @@ from transformers import PreTrainedTokenizerFast
 import pandas as pd
 #from guacamoliency.config import PROCESSED_DATA_DIR
 
-app = typer.Typer()
 
 
-@app.command()
+
+
 def main(
 
 ):
    
-
    
     guacamol = pd.read_csv('data/interim/guacamol.csv')
     guacamol = guacamol['SMILES'].tolist()
     moses = pd.read_csv('data/interim/moses.csv')
     moses = moses['SMILES'].tolist()
+    clearSmiles = pd.read_csv('data/processed/ClearSMILES.csv')
+    clearSmiles = clearSmiles['SMILES'].tolist()
 
     special_tokens = ["<bos>", "<eos>", "<pad>"]
 
@@ -35,7 +36,7 @@ def main(
         "(", ")", ".", "=", "#", "-", "+", "\\", "/", ":", "~", "@", "?", "*", "$"
     ] + [f"%{i:02d}" for i in range(100)] + [str(i) for i in range(10)]
 
-    #FOR Guacamol
+    #FOR Moses
 
     tokenizer = Tokenizer(models.BPE())
 
@@ -61,7 +62,7 @@ def main(
 
 
 
-    #FOR MOSES
+    #FOR guacamol
     tokenizer = Tokenizer(models.BPE())
 
     # Utiliser Split comme pré-tokeniseur basé sur regex
@@ -84,5 +85,27 @@ def main(
     # -----------------------------------------
 
 
+    tokenizer = Tokenizer(models.BPE())
+
+    # Utiliser Split comme pré-tokeniseur basé sur regex
+    tokenizer.pre_tokenizer = pre_tokenizers.Split(pattern, behavior="isolated", invert=False)
+    trainer = trainers.BpeTrainer(
+        vocab_size=10000,
+        initial_alphabet=alphabet,
+        special_tokens=["<pad>", "<bos>", "<eos>"]
+    )
+
+    tokenizer.train_from_iterator(clearSmiles, trainer=trainer)
+
+
+    fast_tokenizer = PreTrainedTokenizerFast(tokenizer_object=tokenizer)
+    fast_tokenizer.pad_token = "<pad>"
+    fast_tokenizer.bos_token = "<bos>"
+    fast_tokenizer.eos_token = "<eos>"
+    # Sauvegarde du tokenizer
+    fast_tokenizer.save_pretrained("data/tokenizers/clearSmiles")
+    # -----------------------------------------
+
+
 if __name__ == "__main__":
-    app()
+    main()
