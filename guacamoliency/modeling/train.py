@@ -69,6 +69,9 @@ def main():
     parser = argparse.ArgumentParser()
     parser.add_argument('--datasets', type = str, default='moses',
                     help="which datasets to use for the training", required=True)
+    parser.add_argument('--input_dir', type = str, default='data/data_tokenizer',
+                    help="which directory for the dataset", required=True
+    )
     parser.add_argument('--output_dir', type = str, default='reports',
                         help="where save our outputs", required=False)
     args = parser.parse_args()
@@ -77,7 +80,7 @@ def main():
 
     #load datasets
     
-    data_set = pd.read_csv("data/interim/"+args.datasets+".csv")
+    data_set = pd.read_csv(args.input_dir+"/"+args.datasets+".csv")
     training_set = data_set[data_set['SPLIT']=='train']
 
     
@@ -132,8 +135,8 @@ def main():
             output_dir = args.output_dir,
             
             learning_rate=5e-4,
-            max_steps=100_000,
-            per_device_train_batch_size=128,
+            max_steps=50_000,
+            per_device_train_batch_size=32,
             save_steps=10_000,
             save_total_limit=6,
             logging_dir=f"{args.output_dir}/logs/"+args.datasets,
@@ -167,7 +170,6 @@ def main():
 
 
     trainer.train()
-    tokenizer.save_pretrained("data/tokenizers/"+args.datasets+"_trained")
     trainer.save_model("models/trained_"+args.datasets)
 
 if __name__ == "__main__":

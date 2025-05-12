@@ -3,7 +3,7 @@ from pathlib import Path
 
 from tqdm import tqdm
 
-
+import argparse
 from tokenizers import Tokenizer, models, pre_tokenizers, trainers
 from tokenizers.pre_tokenizers import Split
 import re
@@ -18,14 +18,16 @@ import pandas as pd
 def main(
 
 ):
+    parser = argparse.ArgumentParser()
+
+    parser.add_argument('--input', type = str, default='moses',
+                    help="which datasets to use for the training", required=True)
+    parser.add_argument('--input_dir',type=str,default="data/data_tokenizer/moses.csv")
+    args = parser.parse_args()
    
-   
-    guacamol = pd.read_csv('data/interim/guacamol.csv')
-    guacamol = guacamol['SMILES'].tolist()
-    moses = pd.read_csv('data/interim/moses.csv')
-    moses = moses['SMILES'].tolist()
-    clearSmiles = pd.read_csv('data/processed/ClearSMILES.csv')
-    clearSmiles = clearSmiles['SMILES'].tolist()
+    dataset = pd.read_csv(args.input_dir)
+    dataset = dataset['SMILES'].tolist()
+    dataset = [k for k in dataset if type(k) == str ]
 
     special_tokens = ["<bos>", "<eos>", "<pad>"]
 
@@ -36,7 +38,7 @@ def main(
         "(", ")", ".", "=", "#", "-", "+", "\\", "/", ":", "~", "@", "?", "*", "$"
     ] + [f"%{i:02d}" for i in range(100)] + [str(i) for i in range(10)]
 
-    #FOR Moses
+
 
     tokenizer = Tokenizer(models.BPE())
 
@@ -48,7 +50,7 @@ def main(
         special_tokens=["<pad>", "<bos>", "<eos>"]
     )
 
-    tokenizer.train_from_iterator(moses, trainer=trainer)
+    tokenizer.train_from_iterator(dataset, trainer=trainer)
 
     # Conversion vers PreTrainedTokenizerFast / UTILE? 
     fast_tokenizer = PreTrainedTokenizerFast(tokenizer_object=tokenizer)
@@ -57,54 +59,7 @@ def main(
     fast_tokenizer.eos_token = "<eos>"
 
     # Sauvegarde du tokenizer
-    fast_tokenizer.save_pretrained("data/tokenizers/moses")
-
-
-
-
-    #FOR guacamol
-    tokenizer = Tokenizer(models.BPE())
-
-    # Utiliser Split comme pré-tokeniseur basé sur regex
-    tokenizer.pre_tokenizer = pre_tokenizers.Split(pattern, behavior="isolated", invert=False)
-    trainer = trainers.BpeTrainer(
-        vocab_size=10000,
-        initial_alphabet=alphabet,
-        special_tokens=["<pad>", "<bos>", "<eos>"]
-    )
-
-    tokenizer.train_from_iterator(guacamol, trainer=trainer)
-
-
-    fast_tokenizer = PreTrainedTokenizerFast(tokenizer_object=tokenizer)
-    fast_tokenizer.pad_token = "<pad>"
-    fast_tokenizer.bos_token = "<bos>"
-    fast_tokenizer.eos_token = "<eos>"
-    # Sauvegarde du tokenizer
-    fast_tokenizer.save_pretrained("data/tokenizers/guacamol")
-    # -----------------------------------------
-
-
-    tokenizer = Tokenizer(models.BPE())
-
-    # Utiliser Split comme pré-tokeniseur basé sur regex
-    tokenizer.pre_tokenizer = pre_tokenizers.Split(pattern, behavior="isolated", invert=False)
-    trainer = trainers.BpeTrainer(
-        vocab_size=10000,
-        initial_alphabet=alphabet,
-        special_tokens=["<pad>", "<bos>", "<eos>"]
-    )
-
-    tokenizer.train_from_iterator(clearSmiles, trainer=trainer)
-
-
-    fast_tokenizer = PreTrainedTokenizerFast(tokenizer_object=tokenizer)
-    fast_tokenizer.pad_token = "<pad>"
-    fast_tokenizer.bos_token = "<bos>"
-    fast_tokenizer.eos_token = "<eos>"
-    # Sauvegarde du tokenizer
-    fast_tokenizer.save_pretrained("data/tokenizers/clearSmiles")
-    # -----------------------------------------
+    fast_tokenizer.save_pretrained("data/tokenizers/"+args.input)
 
 
 if __name__ == "__main__":

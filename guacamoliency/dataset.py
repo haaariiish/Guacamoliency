@@ -1,6 +1,6 @@
 from pathlib import Path
 import moses 
-from guacamol import SMILESDataset
+#from guacamol import SMILESDataset
 import argparse
 from tqdm import tqdm
 import pandas as pd

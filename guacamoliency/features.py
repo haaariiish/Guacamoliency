@@ -1,8 +1,7 @@
 from pathlib import Path
 
-from loguru import logger
 from tqdm import tqdm
-import typer
+
 
 from tokenizers import Tokenizer, models, pre_tokenizers, trainers
 
