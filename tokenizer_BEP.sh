@@ -1,0 +1,1 @@
+python guacamoliency/generate_tokenizerBEP.py --input_dir data/data_tokenizer/moses_ClearSMILES.csv --input moses_ClearSMILES
