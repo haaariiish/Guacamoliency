@@ -29,7 +29,7 @@ def main(
     dataset = dataset['SMILES'].tolist()
     dataset = [k for k in dataset if type(k) == str ]
 
-    special_tokens = ["<bos>", "<eos>", "<pad>"]
+    special_tokens = ["<bos>", "<eos>", "<pad>","Ġ"]
 
     pattern = r"(\[[^\]]+]|<|Br?|Cl?|N|O|S|P|F|I|b|c|n|o|s|p|\(|\)|\.|=|#|-|\+|\\\\|\/|:|~|@|\?|>|\*|\$|\%[0-9]{2}|[0-9])"
     alphabet = [
@@ -47,7 +47,7 @@ def main(
     trainer = trainers.BpeTrainer(
         vocab_size=10000,
         initial_alphabet=alphabet,
-        special_tokens=["<pad>", "<bos>", "<eos>"]
+        special_tokens=["<pad>", "<bos>", "<eos>","Ġ"]
     )
 
     tokenizer.train_from_iterator(dataset, trainer=trainer)
@@ -57,6 +57,7 @@ def main(
     fast_tokenizer.pad_token = "<pad>"
     fast_tokenizer.bos_token = "<bos>"
     fast_tokenizer.eos_token = "<eos>"
+    fast_tokenizer.add_special_tokens({'additional_special_tokens': ["Ġ"]})
 
     # Sauvegarde du tokenizer
     fast_tokenizer.save_pretrained("data/tokenizers/"+args.input)

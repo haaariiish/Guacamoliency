@@ -1,0 +1,12 @@
+your current dir is: /workdir/simlab_team/prabakaran/GuacaMoliency
+your workdir is: /scratch/simlab_team/105019.torque1.cluster.lbt/
+number of nodes: 1
+number of cores: 48
+your execution environment: node081.cluster.lbt
+Le modèle est chargé sur un CPU, attention !!!!!!
+cpu
+Training start
+{'loss': 4.4737, 'grad_norm': 1.8641490936279297, 'learning_rate': 0.00049995, 'epoch': 0.81}
+{'loss': 3.0176, 'grad_norm': 1.3782057762145996, 'learning_rate': 0.00044445000000000004, 'epoch': 1.62}
+{'loss': 2.772, 'grad_norm': 1.2671115398406982, 'learning_rate': 0.00038889444444444444, 'epoch': 2.42}
+{'loss': 2.6541, 'grad_norm': 1.7850717306137085, 'learning_rate': 0.0003333388888888889, 'epoch': 3.23}

@@ -1,12 +1,12 @@
     #!/bin/bash
     #PBS -S /bin/bash
-    #PBS -N training_transformer_models_clearsmi_moses
-    #PBS -o reports/jobs_output/raining_transformer_models_clearsmi_moses.out
-    #PBS -e reports/jobs_output/training_transformer_models_clearsmi_moses.err
+    #PBS -N training_transformer_models_clearsmi_moses2
+    #PBS -o reports/jobs_output/training_transformer_models_clearsmi_moses2.out
+    #PBS -e reports/jobs_output/training_transformer_models_clearsmi_moses2.err
      
-    #PBS -q alphafold2_1n 
-    #PBS -l nodes=1:ppn=48
-    #PBS -l walltime=20:00:00
+    #PBS -q alphafold_1n 
+    #PBS -l nodes=1:ppn=16
+    #PBS -l walltime=25:00:00
     #PBS -A simlab_project
      
     #PBS -m abe
@@ -109,7 +109,7 @@
     source activate train_env
 
 
-    bash launch_training_moses_clearsmi.sh
+    bash scripts/launch_training_moses_clearsmi.sh
 
      
     ## To well chain your jobs, with afterok directive to be sure the current job will complete and OK before running the new one

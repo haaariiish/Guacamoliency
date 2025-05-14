@@ -1,0 +1,11 @@
+Loads the torque-6.1.2 compiled using gnu-4.8.5
+Loads the Miniconda Python distribution plateform
+
+Works only for Python 3.X
+
+
+A conda env named 'sci_tools' is available and contains all basic
+scientific packages (numpy, scipy, mdanalysis, pandas, etc).
+
+Loads the torque-6.1.2 compiled using gnu-4.8.5
+Loads the torque-6.1.2 compiled using gnu-4.8.5

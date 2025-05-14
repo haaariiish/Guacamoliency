@@ -1,0 +1,33 @@
+your current dir is: /workdir/simlab_team/prabakaran/GuacaMoliency
+your workdir is: /scratch/simlab_team/105413.torque1.cluster.lbt/
+number of nodes: 1
+number of cores: 16
+your execution environment: node061.cluster.lbt
+cuda:0
+Training start
+{'loss': 2.2206, 'grad_norm': 68715.7734375, 'learning_rate': 0.00049995, 'epoch': 1.62}
+{'eval_loss': 4.158140182495117, 'eval_runtime': 764.7561, 'eval_samples_per_second': 460.668, 'eval_steps_per_second': 28.792, 'epoch': 1.62}
+{'loss': 1.4947, 'grad_norm': 45116.34765625, 'learning_rate': 0.00044445000000000004, 'epoch': 3.23}
+{'eval_loss': 3.692901372909546, 'eval_runtime': 766.9612, 'eval_samples_per_second': 459.344, 'eval_steps_per_second': 28.709, 'epoch': 3.23}
+{'loss': 1.374, 'grad_norm': 38794.9609375, 'learning_rate': 0.00038889444444444444, 'epoch': 4.85}
+{'eval_loss': 3.5404138565063477, 'eval_runtime': 764.4199, 'eval_samples_per_second': 460.871, 'eval_steps_per_second': 28.805, 'epoch': 4.85}
+{'loss': 1.3128, 'grad_norm': 39666.81640625, 'learning_rate': 0.0003333388888888889, 'epoch': 6.46}
+{'eval_loss': 3.457397699356079, 'eval_runtime': 766.4961, 'eval_samples_per_second': 459.623, 'eval_steps_per_second': 28.727, 'epoch': 6.46}
+{'loss': 1.2746, 'grad_norm': 36661.35546875, 'learning_rate': 0.00027778333333333335, 'epoch': 8.08}
+{'eval_loss': 3.395956039428711, 'eval_runtime': 764.9132, 'eval_samples_per_second': 460.574, 'eval_steps_per_second': 28.786, 'epoch': 8.08}
+{'loss': 1.242, 'grad_norm': 39150.0, 'learning_rate': 0.00022222777777777778, 'epoch': 9.69}
+{'eval_loss': 3.349614143371582, 'eval_runtime': 766.1864, 'eval_samples_per_second': 459.808, 'eval_steps_per_second': 28.738, 'epoch': 9.69}
+{'loss': 1.2155, 'grad_norm': 37097.421875, 'learning_rate': 0.00016667222222222224, 'epoch': 11.31}
+{'eval_loss': 3.318345069885254, 'eval_runtime': 765.2712, 'eval_samples_per_second': 460.358, 'eval_steps_per_second': 28.773, 'epoch': 11.31}
+{'loss': 1.1929, 'grad_norm': 39369.546875, 'learning_rate': 0.00011111666666666667, 'epoch': 12.92}
+{'eval_loss': 3.2819650173187256, 'eval_runtime': 765.2334, 'eval_samples_per_second': 460.381, 'eval_steps_per_second': 28.774, 'epoch': 12.92}
+{'loss': 1.1703, 'grad_norm': 41399.35546875, 'learning_rate': 5.556111111111111e-05, 'epoch': 14.54}
+{'eval_loss': 3.256861448287964, 'eval_runtime': 765.3961, 'eval_samples_per_second': 460.283, 'eval_steps_per_second': 28.768, 'epoch': 14.54}
+{'loss': 1.1539, 'grad_norm': 38493.96484375, 'learning_rate': 5.555555555555556e-09, 'epoch': 16.15}
+{'eval_loss': 3.240105628967285, 'eval_runtime': 766.8615, 'eval_samples_per_second': 459.404, 'eval_steps_per_second': 28.713, 'epoch': 16.15}
+{'train_runtime': 36962.041, 'train_samples_per_second': 692.602, 'train_steps_per_second': 2.705, 'train_loss': 1.36513033203125, 'epoch': 16.15}
+Data from this directory : data/training_data/moses_canonical.csv
+Tokenizer from this directory : data/tokenizers/moses_canonical/tokenizer.json
+log files are in this directory : reports/logs/moses_canonical/2
+Model and checkpoint of training has been save in this directory : models/trained_moses_canonical/2
+END OF train.py
