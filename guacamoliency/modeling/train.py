@@ -114,7 +114,7 @@ def main():
     training_set = data_set[data_set['SPLIT']=='train']
     training_set = Dataset.from_pandas(training_set)
 
-    eval_set = data_set[data_set['SPLIT']!='train']
+    eval_set = data_set[data_set['SPLIT']=='test']
     eval_set = Dataset.from_pandas(eval_set)
 
     encoded_training_set = training_set.map(partial(tokenize_func, tokenizer=tokenizer), batched=True,  remove_columns=training_set.column_names)

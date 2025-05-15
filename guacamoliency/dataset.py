@@ -5,8 +5,44 @@ import argparse
 from tqdm import tqdm
 import pandas as pd
 
+from torch.utils.data import Dataset
 
-def main():
+class ScaffoldCompletionDataset(Dataset):
+    def __init__(self, tokenizer, scaffolds, full_smiles, max_length=128):
+        self.tokenizer = tokenizer
+        self.scaffolds = scaffolds
+        self.full_smiles = full_smiles
+        self.max_length = max_length
+
+    def __len__(self):
+        return len(self.scaffolds)
+
+    def __getitem__(self, idx):
+        prompt = self.scaffolds[idx]
+        target = self.full_smiles[idx]
+
+        input_text = target  # on donne tout comme entrée
+        encoding = self.tokenizer(
+            input_text,
+            padding="max_length",
+            truncation=True,
+            max_length=self.max_length,
+            return_tensors="pt"
+        )
+
+        labels = encoding.input_ids.clone()
+        # Masquer les tokens du scaffold (pas d’apprentissage sur eux)
+        num_prompt_tokens = len(self.tokenizer(prompt).input_ids) - 1  # enlever <eos>
+        labels[0][:num_prompt_tokens] = -100
+
+        return {
+            "input_ids": encoding.input_ids.squeeze(),
+            "attention_mask": encoding.attention_mask.squeeze(),
+            "labels": labels.squeeze()
+        }
+
+
+"""def main():
     parser = argparse.ArgumentParser()
 
     parser.add_argument('--datasets', type = str, default='moses',
@@ -40,4 +76,4 @@ def main():
 
     dataset.to_csv(args.output_dir + "/" + args.datasets)
 if __name__ == "__main__":
-    main()
+    main()"""

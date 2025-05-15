@@ -6,7 +6,7 @@
      
     #PBS -q alphafold_1n 
     #PBS -l nodes=1:ppn=16
-    #PBS -l walltime=25:00:00
+    #PBS -l walltime=50:00:00
     #PBS -A simlab_project
      
     #PBS -m abe
