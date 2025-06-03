@@ -1,143 +1,207 @@
-from pathlib import Path
-
-from loguru import logger
-from tqdm import tqdm
-import typer
-
-from transformers import TrainingArguments
-from transformers import GPT2Config
-from transformers import GPT2LMHeadModel
-from transformers import PreTrainedTokenizerFast
-from transformers import DataCollatorForLanguageModeling
-import tokenizers
-import argparse 
-from transformers import Trainer
-import pandas as pd
-from torch import nn
-import torch
-from datasets import Dataset
-
-
-
-
-
-from guacamoliency.config import MODELS_DIR, PROCESSED_DATA_DIR
-
-app = typer.Typer()
-
-
-
-def configure_tokenizer(tokenizer_path):
-    tokenizer = PreTrainedTokenizerFast(tokenizer_file=tokenizer_path)
-    tokenizer.model_max_length = 128
-    tokenizer.pad_token = "<pad>"
-    tokenizer.bos_token = "<bos>"
-    tokenizer.eos_token = "<eos>"
-    return tokenizer
-
-def tokenize_func(examples):
+def tokenize_func(examples, tokenizer,max_length):
     smiles = examples["SMILES"]
-    smiles = [str(s) for s in smiles if isinstance(s, str) or s is not None]
-    
-    tokenized = tokenizer(
+    smiles = [s for s in smiles if isinstance(s, str) or s is not None]
+
+    return tokenizer(
         smiles, 
         padding="max_length", 
         truncation=True, 
-        max_length=128
+        max_length=max_length
     )
 
+"""def debug_func(example,tokenizer):
+    ids = tokenizer(example["SMILES"])["input_ids"]
+    
+    for token_id in ids:
+        if len(token_id) >= tokenizer.vocab_size:
+            print(" Token ID exceeds vocab size:", token_id, ">= vocab_size", tokenizer.vocab_size)
+    return tokenizer(example["SMILES"])
+"""
 
-    return tokenized
 
-@app.command()
-def main(
-):
+def main():
+    from pathlib import Path
+
+
+    from tqdm import tqdm
+
+
+    from transformers import TrainingArguments
+    from transformers import GPT2Config
+    from transformers import GPT2LMHeadModel
+    from transformers import AutoTokenizer
+    from transformers import DataCollatorForLanguageModeling
+    import tokenizers
+    import argparse 
+    from transformers import Trainer
+    import pandas as pd
+    from torch import nn
+    import torch
+    from datasets import Dataset
+    from functools import partial
+
+
     parser = argparse.ArgumentParser()
 
-    parser.add_argument('--datasets', type = str, default='moses',
-                        help="which datasets to use for the training", required=True)
-    parser.add_argument('--output_dir', type = str, default='reports',
-                        help="where save our outputs", required=False)
+    parser.add_argument('--datasets', type = str, default='moses_canonical',
+                    help="which type of datasets to use for the training", required=True)
+    
+    parser.add_argument('--dataset_dir', type = str, default='data/traning_data/moses_canonical.csv',
+                    help="which directory for the dataset", required=True
+    )
+
+    parser.add_argument('--tokenizer_path', type = str, default="data/tokenizersBEP/moses_canonical",
+            help="which directory for the tokenizer", required=True
+    )
+
+    parser.add_argument('--log_dir', type = str, default='reports',
+                        help="where save our logs", required=False)
+    
+    parser.add_argument('--model_save_folder', type = str,default='models/trained_moses_canonical',
+                         help="where save our model", required=False)
+    
+    parser.add_argument('--learning_rate',type=float,default= 6e-4,
+                        help="learning rate used in training", required=False)
+    
+    parser.add_argument('--max_steps',type=int,default= 41300,
+                        help="max steps used in training", required=False)
+    
+    parser.add_argument('--batch_size',type=int,default= 384,
+                        help="batch size per device used in training", required=False)
+    
+    parser.add_argument('--save_steps',type=int,default= 5000,
+                        help="how many steps between saves in training", required=False)
+    
+    parser.add_argument('--save_total_limit',type=int,default= 5,
+                        help="how many time are we able to save during training", required=False)
+    
+    parser.add_argument('--n_embd',type=int,default= 256,
+                        help="", required=False)
+    
+    parser.add_argument('--n_layer',type=int,default= 8,
+                        help="", required=False)
+    
+    parser.add_argument('--n_head',type=int,default= 8,
+                        help="", required=False)
+    
+    parser.add_argument('--resid_pdrop',type=float,default= 0.1,
+                        help="", required=False)
+    
+    parser.add_argument('--embd_pdrop',type=float,default= 0.1,
+                        help="", required=False)
+    
+    parser.add_argument('--attn_pdrop',type=float,default= 0.1,
+                        help="", required=False)
+    
+    parser.add_argument('--warmup_steps',type=int,default= 413,
+                        help="warmup_steps before learning rate decrease", required=False)
+    
+    parser.add_argument('--lr_scheduler_type',type=str,default="cosine_with_min_lr",
+                        help="Scheduler use by the optimiser for learning rate", required=False)
+    
+    
+    parser.add_argument('--num_workers',type=int,default= 10,
+                        help="", required=False)
+    
+    parser.add_argument('--tokenizer_type',type=str,
+                        help="type de tokenizer utilisé", required=True)
+
     args = parser.parse_args()
+
+
     #configure tokenizer
-    tokenizer = configure_tokenizer("data/tokenizers/"+args.datasets+"/tokenizer.json")
+    tokenizer = AutoTokenizer.from_pretrained(args.tokenizer_path)
+
+
 
     #load datasets
-    
-    data_set = pd.read_csv("data/interim/"+args.datasets+".csv")
+    data_set = pd.read_csv(args.dataset_dir)
+
     training_set = data_set[data_set['SPLIT']=='train']
-
-    
-
-
     training_set = Dataset.from_pandas(training_set)
 
-    
-
-
-    eval_set = data_set[data_set['SPLIT']!='train']
-
+    eval_set = data_set[data_set['SPLIT']=='test']
     eval_set = Dataset.from_pandas(eval_set)
 
-
+    encoded_training_set = training_set.map(partial(tokenize_func, tokenizer=tokenizer, max_length=tokenizer.model_max_length), batched=True,  remove_columns=training_set.column_names)
+   
     #encoded_training_set = training_set.map(tokenize_func, batched=True, remove_columns=["SMILES"])
 
-    encoded_eval_set = eval_set.map(tokenize_func, batched=True, remove_columns=eval_set.column_names)
-    encoded_training_set = encoded_eval_set
-
+    encoded_eval_set = eval_set.map(partial(tokenize_func, tokenizer=tokenizer, max_length=tokenizer.model_max_length), batched=True, remove_columns=eval_set.column_names)
+    #encoded_eval_set = eval_set.map(partial(debug_func, tokenizer=tokenizer), batched=True, remove_columns=eval_set.column_names)
+    
+    #encoded_eval_set = eval_set.map(tokenize_func, batched=True, remove_columns=eval_set.column_names)
+    #encoded_training_set = encoded_eval_set
 
     vocab_size = tokenizer.vocab_size
-
+    #print(vocab_size)
     #configuration of model
-
     config =   GPT2Config(
-            vocab_size=vocab_size,  # 10,000 tokens
-            n_positions=128,
-            n_ctx=128,
-            n_embd=256,
-            n_layer=8,
-            n_head=8,
-            resid_pdrop=0.1,
-            embd_pdrop=0.1,
-            attn_pdrop=0.1
+            vocab_size=vocab_size,  # 10,000 tokens( pour BEP )
+            n_positions=tokenizer.model_max_length , # ça ne génèrera que des smiles de la même taille
+            n_ctx=tokenizer.model_max_length,  # ça ne génèrera que des smiles de la même taille
+            n_embd=args.n_embd,
+            n_layer=args.n_layer,
+            n_head=args.n_head,
+            resid_pdrop=args.resid_pdrop,
+            embd_pdrop=args.embd_pdrop,
+            attn_pdrop=args.attn_pdrop
         )
 
-    #the model
+    #the model and verification of GPU good usage
     model = GPT2LMHeadModel(config)
     model.resize_token_embeddings(len(tokenizer))
+    #print(len(tokenizer))
+
     if torch.cuda.is_available(): 
         model.to("cuda")
     else :
-        print("Le modèle est chargé sur un CPU, attention !!!!!!")
-        model.to("cpu")
+        raise Exception("Install correctly CUDA or check your drivers")
     print(model.device)
-    #training arguments
-
-    training_args = TrainingArguments(
-            output_dir = args.output_dir,
-            
-            learning_rate=5e-4,
-            max_steps=100_000,
-            per_device_train_batch_size=128,
-            save_steps=10_000,
-            save_total_limit=3,
-            logging_dir=f"{args.output_dir}/logs/"+args.datasets,
-            report_to="tensorboard",
-            logging_steps=10_000,
-            warmup_steps=10_000,
-            dataloader_num_workers=4,
-            gradient_accumulation_steps=1,
-            fp16=True,
-            remove_unused_columns=False
-        )
     
 
+    #Construction of valid log and model saving folder if it's already exist
+    model_save_folder = args.model_save_folder + "_" + args.tokenizer_type
+    id_save = 1
+    while os.path.isdir(os.getcwd() + "/"+model_save_folder +"/"+ str(id_save)):
+        id_save +=1
+    model_save_folder = model_save_folder+"/"+str(id_save)
+    log_dir_end = args.datasets + "_" + args.tokenizer_type +"/"+ str(id_save)
+
+
+    #training arguments
+    training_args = TrainingArguments(
+            output_dir = model_save_folder,
+            
+            learning_rate=args.learning_rate,
+            max_steps=args.max_steps,
+            eval_strategy="steps",
+            per_device_train_batch_size=args.batch_size,
+            save_steps=args.save_steps,
+            save_total_limit=args.save_total_limit,
+            logging_dir=f"{args.log_dir}/logs/"+log_dir_end,
+            report_to="tensorboard",
+            logging_first_step = 10,
+            logging_strategy = "steps",
+            logging_steps=2000,
+            warmup_steps=args.warmup_steps,
+            dataloader_num_workers=args.num_workers,
+            gradient_accumulation_steps=1,
+            fp16=True,
+            remove_unused_columns=False,
+            lr_scheduler_type = args.lr_scheduler_type,
+            lr_scheduler_kwargs ={
+            "min_lr": 0.1*args.learning_rate },
+            adam_beta1 = 0.9,
+            adam_beta2 = 0.95,
+            weight_decay = 0.1
+        )
+    
 
     data_collator = DataCollatorForLanguageModeling(
         tokenizer=tokenizer,
         mlm=False)
     
-
     trainer = Trainer(
         model=model,
         args=training_args,
@@ -150,10 +214,17 @@ def main(
 
     print("Training start")
 
-
     trainer.train()
-    tokenizer.save_pretrained("data/tokenizers/"+args.datasets+"_trained")
-    trainer.save_model("models/trained_"+args.datasets)
-
+    trainer.save_model(model_save_folder+"/final_model")
+    
+    print("Data from this directory : " + args.dataset_dir)
+    print("Tokenizer from this directory : " + args.tokenizer_path)
+    print("log files are in this directory : " + f"{args.log_dir}/logs/"+log_dir_end)
+    print("Model and checkpoint of training has been save in this directory : " + model_save_folder)
+    print("END OF train.py")
 if __name__ == "__main__":
-    app()
+
+    import os
+    os.environ["TOKENIZERS_PARALLELISM"] = "false"
+
+    main()

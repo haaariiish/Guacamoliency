@@ -1,0 +1,31 @@
+Loads the torque-6.1.2 compiled using gnu-4.8.5
+Loads the Miniconda Python distribution plateform
+
+Works only for Python 3.X
+
+
+A conda env named 'sci_tools' is available and contains all basic
+scientific packages (numpy, scipy, mdanalysis, pandas, etc).
+
+Loads the torque-6.1.2 compiled using gnu-4.8.5
+Loads the torque-6.1.2 compiled using gnu-4.8.5
+Loads the Miniconda Python distribution plateform
+
+Works only for Python 3.X
+
+
+A conda env named 'sci_tools' is available and contains all basic
+scientific packages (numpy, scipy, mdanalysis, pandas, etc).
+
+usage: train.py [-h] --datasets DATASETS --dataset_dir DATASET_DIR
+                --tokenizer_path TOKENIZER_PATH [--log_dir LOG_DIR]
+                [--model_save_folder MODEL_SAVE_FOLDER]
+                [--learning_rate LEARNING_RATE] [--max_steps MAX_STEPS]
+                [--batch_size BATCH_SIZE] [--save_steps SAVE_STEPS]
+                [--save_total_limit SAVE_TOTAL_LIMIT] [--n_embd N_EMBD]
+                [--n_layer N_LAYER] [--n_head N_HEAD]
+                [--resid_pdrop RESID_PDROP] [--embd_pdrop EMBD_PDROP]
+                [--attn_pdrop ATTN_PDROP] [--warmup_steps WARMUP_STEPS]
+                [--lr_scheduler_type LR_SCHEDULER_TYPE]
+                [--num_workers NUM_WORKERS]
+train.py: error: unrecognized arguments: --tokenizer_type character_level
