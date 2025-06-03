@@ -1,3 +1,35 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:80e4943721fb6c707181c289e233906f1ee6ff502ce0ef521dad942abafae9e3
-size 750
+{
+  "added_tokens_decoder": {
+    "0": {
+      "content": "<bos>",
+      "lstrip": false,
+      "normalized": false,
+      "rstrip": false,
+      "single_word": false,
+      "special": true
+    },
+    "1": {
+      "content": "<eos>",
+      "lstrip": false,
+      "normalized": false,
+      "rstrip": false,
+      "single_word": false,
+      "special": true
+    },
+    "2": {
+      "content": "<pad>",
+      "lstrip": false,
+      "normalized": false,
+      "rstrip": false,
+      "single_word": false,
+      "special": true
+    }
+  },
+  "bos_token": "<bos>",
+  "clean_up_tokenization_spaces": false,
+  "eos_token": "<eos>",
+  "extra_special_tokens": {},
+  "model_max_length": 103,
+  "pad_token": "<pad>",
+  "tokenizer_class": "PreTrainedTokenizer"
+}

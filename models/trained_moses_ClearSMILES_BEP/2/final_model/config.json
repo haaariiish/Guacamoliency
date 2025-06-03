@@ -1,3 +1,32 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:cef553eba6d937ad898f1ad00efaf763aa67608b71c44878f3dd3158726be0f7
-size 762
+{
+  "activation_function": "gelu_new",
+  "architectures": [
+    "GPT2LMHeadModel"
+  ],
+  "attn_pdrop": 0.1,
+  "bos_token_id": 50256,
+  "embd_pdrop": 0.1,
+  "eos_token_id": 50256,
+  "initializer_range": 0.02,
+  "layer_norm_epsilon": 1e-05,
+  "model_type": "gpt2",
+  "n_ctx": 60,
+  "n_embd": 256,
+  "n_head": 8,
+  "n_inner": null,
+  "n_layer": 8,
+  "n_positions": 60,
+  "reorder_and_upcast_attn": false,
+  "resid_pdrop": 0.1,
+  "scale_attn_by_inverse_layer_idx": false,
+  "scale_attn_weights": true,
+  "summary_activation": null,
+  "summary_first_dropout": 0.1,
+  "summary_proj_to_labels": true,
+  "summary_type": "cls_index",
+  "summary_use_proj": true,
+  "torch_dtype": "float32",
+  "transformers_version": "4.51.3",
+  "use_cache": true,
+  "vocab_size": 10000
+}
