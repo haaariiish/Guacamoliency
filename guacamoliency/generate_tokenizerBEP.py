@@ -67,6 +67,7 @@ def main(
         special_tokens=[
             ("<bos>", tokenizer.token_to_id("<bos>")),
             ("<eos>", tokenizer.token_to_id("<eos>")),
+            ("<pad>", tokenizer.token_to_id("<pad>"))
         ]
     )
         
