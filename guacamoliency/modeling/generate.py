@@ -53,19 +53,22 @@ def main():
     tokenizer = AutoTokenizer.from_pretrained(args.model_dir,local_files_only=True)
     # load Model
     model = AutoModelForCausalLM.from_pretrained(args.model_dir,local_files_only=True)
+    model.eval()
+    with torch.no_grad():
+        # génération ici
 
-    generated_ids = model.generate(
-      max_length = tokenizer.model_max_length,
-      num_return_sequences = args.num_sequence,
-      pad_token_id = tokenizer.pad_token_id,
-      bos_token_id = tokenizer.bos_token_id,
-      eos_token_id = tokenizer.eos_token_id,
-      do_sample = True,
-      temperature = args.temperature,
-      return_dict_in_generate = True,
-  )
+        generated_ids = model.generate(
+        max_length = tokenizer.model_max_length,
+        num_return_sequences = args.num_sequence,
+        pad_token_id = tokenizer.pad_token_id,
+        bos_token_id = tokenizer.bos_token_id,
+        eos_token_id = tokenizer.eos_token_id,
+        do_sample = True,
+        temperature = args.temperature,
+        return_dict_in_generate = True,
+    )
     #print(generated_ids.keys())
-    generated_smiles = [tokenizer.decode(output, skip_special_tokens=(not mscaffolds)).replace(" ","") for output in generated_ids['sequences']]
+        generated_smiles = [tokenizer.decode(output, skip_special_tokens=(not mscaffolds)).replace(" ","") for output in generated_ids['sequences']]
 
     smiles_set = pd.DataFrame()
 

@@ -50,6 +50,8 @@ def main():
     tokenizer.model_max_length += 1 
     
     model = AutoModelForCausalLM.from_pretrained(args.model_dir)
+
+    model.eval()
     dataset = pd.read_csv(args.dataset)["SMILES"].to_list()
     dataset = [k for k in dataset if isinstance(k,str)] # si le modèle n'a rien généré, la case correspondante dans le csv est vide ce qui pose problème dans la suite
     dataset = [k for k in dataset if Chem.MolFromSmiles(k)]

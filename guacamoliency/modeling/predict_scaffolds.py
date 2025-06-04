@@ -45,6 +45,7 @@ def main():
     inputs_list = [args.scaffolds] * args.num_sequence
 
     model = AutoModelForCausalLM.from_pretrained(args.model_dir)
+    model.eval()
     tokenizer = AutoTokenizer.from_pretrained(args.model_dir)
     tokens = tokenizer(args.scaffolds,return_tensors="pt")
     model.generation_config.pad_token_id = tokenizer.pad_token_id
