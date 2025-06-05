@@ -25,3 +25,17 @@ python guacamoliency/saliency_pair_coherence.py \
     --dataset 'data/generated/guacamol_canonical_CL_1.csv' \
     --output_dir 'reports/data/guacamol_canonical_CL/1/pair_coherence_data.csv'\
     --threshold 0
+
+python guacamoliency/saliency_pair_coherence.py \
+    --model moses_ClearSMILES_CL \
+    --model_dir 'models/trained_moses_ClearSMILES_character_level/1/final_model' \
+    --dataset 'data/generated/moses_ClearSMILES_CL_1.csv' \
+    --output_dir 'reports/data/moses_ClearSMILES_CL/1/pair_coherence_data.csv'\
+    --threshold 1
+
+python guacamoliency/saliency_pair_coherence.py \
+    --model moses_ClearSMILES_CL \
+    --model_dir 'models/trained_moses_ClearSMILES_character_level/1/final_model' \
+    --dataset 'data/generated/moses_ClearSMILES_CL_1.csv' \
+    --output_dir 'reports/data/moses_ClearSMILES_CL/1/pair_coherence_data.csv'\
+    --threshold 0
