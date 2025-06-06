@@ -1,0 +1,74 @@
+your current dir is: /workdir/simlab_team/prabakaran/GuacaMoliency
+your workdir is: /scratch/simlab_team/106327.torque1.cluster.lbt/
+number of nodes: 1
+number of cores: 16
+your execution environment: node061.cluster.lbt
+cuda:0
+Training start
+{'loss': 2.3781, 'grad_norm': 819044.5625, 'learning_rate': 0.0, 'epoch': 0.0}
+{'loss': 0.4142, 'grad_norm': 18592.13671875, 'learning_rate': 0.0005990964579803462, 'epoch': 0.97}
+{'eval_loss': 0.594001829624176, 'eval_runtime': 361.047, 'eval_samples_per_second': 487.676, 'eval_steps_per_second': 30.481, 'epoch': 0.97}
+{'loss': 0.2844, 'grad_norm': 7323.39990234375, 'learning_rate': 0.0005953914365631013, 'epoch': 1.94}
+{'eval_loss': 0.5532823801040649, 'eval_runtime': 361.7701, 'eval_samples_per_second': 486.701, 'eval_steps_per_second': 30.42, 'epoch': 1.94}
+{'loss': 0.2695, 'grad_norm': 5186.53515625, 'learning_rate': 0.0005888627574082463, 'epoch': 2.91}
+{'eval_loss': 0.5353379249572754, 'eval_runtime': 362.0916, 'eval_samples_per_second': 486.269, 'eval_steps_per_second': 30.393, 'epoch': 2.91}
+{'loss': 0.2623, 'grad_norm': 6225.693359375, 'learning_rate': 0.0005795798830261421, 'epoch': 3.88}
+{'eval_loss': 0.5258451700210571, 'eval_runtime': 362.5228, 'eval_samples_per_second': 485.691, 'eval_steps_per_second': 30.357, 'epoch': 3.88}
+{'loss': 0.2582, 'grad_norm': 5068.0732421875, 'learning_rate': 0.0005676415794524068, 'epoch': 4.84}
+{'eval_loss': 0.5191168785095215, 'eval_runtime': 361.7513, 'eval_samples_per_second': 486.727, 'eval_steps_per_second': 30.421, 'epoch': 4.84}
+{'loss': 0.2551, 'grad_norm': 4229.232421875, 'learning_rate': 0.0005531748654171714, 'epoch': 5.81}
+{'eval_loss': 0.5146166086196899, 'eval_runtime': 361.5944, 'eval_samples_per_second': 486.938, 'eval_steps_per_second': 30.435, 'epoch': 5.81}
+{'loss': 0.2527, 'grad_norm': 5765.35009765625, 'learning_rate': 0.0005363336609170733, 'epoch': 6.78}
+{'eval_loss': 0.5109479427337646, 'eval_runtime': 362.2221, 'eval_samples_per_second': 486.094, 'eval_steps_per_second': 30.382, 'epoch': 6.78}
+{'loss': 0.2509, 'grad_norm': 4435.14111328125, 'learning_rate': 0.0005172971495686346, 'epoch': 7.75}
+{'eval_loss': 0.5075356364250183, 'eval_runtime': 362.8922, 'eval_samples_per_second': 485.196, 'eval_steps_per_second': 30.326, 'epoch': 7.75}
+{'loss': 0.2493, 'grad_norm': 5032.55419921875, 'learning_rate': 0.0004962678721669249, 'epoch': 8.72}
+{'eval_loss': 0.5052384734153748, 'eval_runtime': 360.6481, 'eval_samples_per_second': 488.215, 'eval_steps_per_second': 30.515, 'epoch': 8.72}
+{'loss': 0.2479, 'grad_norm': 4762.2607421875, 'learning_rate': 0.0004734695717332738, 'epoch': 9.69}
+{'eval_loss': 0.5033004879951477, 'eval_runtime': 362.4172, 'eval_samples_per_second': 485.832, 'eval_steps_per_second': 30.366, 'epoch': 9.69}
+{'loss': 0.2466, 'grad_norm': 5743.59423828125, 'learning_rate': 0.0004491448129798573, 'epoch': 10.66}
+{'eval_loss': 0.5011518001556396, 'eval_runtime': 363.169, 'eval_samples_per_second': 484.827, 'eval_steps_per_second': 30.303, 'epoch': 10.66}
+{'loss': 0.2454, 'grad_norm': 5059.1728515625, 'learning_rate': 0.00042355240151909087, 'epoch': 11.63}
+{'eval_loss': 0.49865850806236267, 'eval_runtime': 361.909, 'eval_samples_per_second': 486.515, 'eval_steps_per_second': 30.408, 'epoch': 11.63}
+{'loss': 0.2443, 'grad_norm': 4772.998046875, 'learning_rate': 0.00039696463027640255, 'epoch': 12.6}
+{'eval_loss': 0.4969111382961273, 'eval_runtime': 361.7348, 'eval_samples_per_second': 486.749, 'eval_steps_per_second': 30.423, 'epoch': 12.6}
+{'loss': 0.2432, 'grad_norm': 4762.29052734375, 'learning_rate': 0.0003696643824034398, 'epoch': 13.57}
+{'eval_loss': 0.4953167736530304, 'eval_runtime': 360.1184, 'eval_samples_per_second': 488.934, 'eval_steps_per_second': 30.559, 'epoch': 13.57}
+{'loss': 0.2422, 'grad_norm': 5065.228515625, 'learning_rate': 0.00034194212151554565, 'epoch': 14.53}
+{'eval_loss': 0.4937133193016052, 'eval_runtime': 362.3143, 'eval_samples_per_second': 485.97, 'eval_steps_per_second': 30.374, 'epoch': 14.53}
+{'loss': 0.2412, 'grad_norm': 6294.125, 'learning_rate': 0.0003140928012761608, 'epoch': 15.5}
+{'eval_loss': 0.49181270599365234, 'eval_runtime': 362.6236, 'eval_samples_per_second': 485.556, 'eval_steps_per_second': 30.348, 'epoch': 15.5}
+{'loss': 0.2403, 'grad_norm': 4466.3662109375, 'learning_rate': 0.0002864127272089282, 'epoch': 16.47}
+{'eval_loss': 0.490335077047348, 'eval_runtime': 362.8691, 'eval_samples_per_second': 485.227, 'eval_steps_per_second': 30.328, 'epoch': 16.47}
+{'loss': 0.2394, 'grad_norm': 5150.4013671875, 'learning_rate': 0.0002591964041265491, 'epoch': 17.44}
+{'eval_loss': 0.48897606134414673, 'eval_runtime': 362.8867, 'eval_samples_per_second': 485.204, 'eval_steps_per_second': 30.326, 'epoch': 17.44}
+{'loss': 0.2385, 'grad_norm': 5145.99560546875, 'learning_rate': 0.00023273340271847792, 'epoch': 18.41}
+{'eval_loss': 0.48712384700775146, 'eval_runtime': 362.0434, 'eval_samples_per_second': 486.334, 'eval_steps_per_second': 30.397, 'epoch': 18.41}
+{'loss': 0.2375, 'grad_norm': 5304.87646484375, 'learning_rate': 0.00020730527863569554, 'epoch': 19.38}
+{'eval_loss': 0.4858643412590027, 'eval_runtime': 362.5988, 'eval_samples_per_second': 485.589, 'eval_steps_per_second': 30.35, 'epoch': 19.38}
+{'loss': 0.2367, 'grad_norm': 5294.18212890625, 'learning_rate': 0.00018318257685225652, 'epoch': 20.35}
+{'eval_loss': 0.484454870223999, 'eval_runtime': 363.7378, 'eval_samples_per_second': 484.068, 'eval_steps_per_second': 30.255, 'epoch': 20.35}
+{'loss': 0.2358, 'grad_norm': 5627.60888671875, 'learning_rate': 0.00016062195317599303, 'epoch': 21.32}
+{'eval_loss': 0.48335549235343933, 'eval_runtime': 362.8308, 'eval_samples_per_second': 485.279, 'eval_steps_per_second': 30.331, 'epoch': 21.32}
+{'loss': 0.2349, 'grad_norm': 5303.896484375, 'learning_rate': 0.00013986344353434044, 'epoch': 22.29}
+{'eval_loss': 0.4825018048286438, 'eval_runtime': 361.1578, 'eval_samples_per_second': 487.527, 'eval_steps_per_second': 30.471, 'epoch': 22.29}
+{'loss': 0.2342, 'grad_norm': 5631.23046875, 'learning_rate': 0.00012112791008897953, 'epoch': 23.26}
+{'eval_loss': 0.48128968477249146, 'eval_runtime': 363.8714, 'eval_samples_per_second': 483.891, 'eval_steps_per_second': 30.244, 'epoch': 23.26}
+{'loss': 0.2335, 'grad_norm': 5247.20654296875, 'learning_rate': 0.0001046146913516058, 'epoch': 24.22}
+{'eval_loss': 0.48012399673461914, 'eval_runtime': 363.1803, 'eval_samples_per_second': 484.812, 'eval_steps_per_second': 30.302, 'epoch': 24.22}
+{'loss': 0.2328, 'grad_norm': 5490.39111328125, 'learning_rate': 9.049948130264499e-05, 'epoch': 25.19}
+{'eval_loss': 0.4793706238269806, 'eval_runtime': 363.2091, 'eval_samples_per_second': 484.773, 'eval_steps_per_second': 30.299, 'epoch': 25.19}
+{'loss': 0.2322, 'grad_norm': 5531.90185546875, 'learning_rate': 7.89324600782344e-05, 'epoch': 26.16}
+{'eval_loss': 0.47871726751327515, 'eval_runtime': 361.7266, 'eval_samples_per_second': 486.76, 'eval_steps_per_second': 30.424, 'epoch': 26.16}
+{'loss': 0.2317, 'grad_norm': 6354.7646484375, 'learning_rate': 7.003669611420746e-05, 'epoch': 27.13}
+{'eval_loss': 0.4780087172985077, 'eval_runtime': 362.284, 'eval_samples_per_second': 486.011, 'eval_steps_per_second': 30.377, 'epoch': 27.13}
+{'loss': 0.2313, 'grad_norm': 5627.251953125, 'learning_rate': 6.390683674762324e-05, 'epoch': 28.1}
+{'eval_loss': 0.4773651659488678, 'eval_runtime': 362.0109, 'eval_samples_per_second': 486.378, 'eval_steps_per_second': 30.4, 'epoch': 28.1}
+{'loss': 0.231, 'grad_norm': 5949.4287109375, 'learning_rate': 6.060810120731245e-05, 'epoch': 29.07}
+{'eval_loss': 0.47716012597084045, 'eval_runtime': 361.7842, 'eval_samples_per_second': 486.682, 'eval_steps_per_second': 30.419, 'epoch': 29.07}
+{'train_runtime': 29859.5425, 'train_samples_per_second': 1576.662, 'train_steps_per_second': 2.053, 'train_loss': 0.249532944140971, 'epoch': 29.7}
+Data from this directory : data/training_data/moses_canonical.csv
+Tokenizer from this directory : data/tokenizers_character_level/moses_canonical
+log files are in this directory : reports/logs/moses_canonical_character_level/3
+Model and checkpoint of training has been save in this directory : models/trained_moses_canonical_character_level/3
+END OF train.py

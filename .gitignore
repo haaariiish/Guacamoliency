@@ -1,5 +1,6 @@
 # Data
 /data/
+/models/
 
 # Mac OS-specific storage files
 .DS_Store
@@ -14,6 +15,7 @@
 __pycache__/
 *.py[cod]
 *$py.class
+
 
 # C extensions
 *.so
