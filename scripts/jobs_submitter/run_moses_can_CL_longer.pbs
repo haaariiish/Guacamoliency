@@ -5,8 +5,8 @@
     #PBS -e reports/jobs_output/moses_canonical/training_transformer_models_canonical_moses_CL_longer.err
      
 
-    #PBS -q alphafold_1n 
-    #PBS -l nodes=1:ppn=16
+    #PBS -q alphafold2_1n 
+    #PBS -l nodes=1:ppn=48
     #PBS -l walltime=50:00:00
     #PBS -A simlab_project
      
