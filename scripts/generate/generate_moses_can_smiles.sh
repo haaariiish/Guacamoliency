@@ -33,3 +33,11 @@ python guacamoliency/modeling/generate.py \
     --num_sequence 15000 \
     --temperature 1 \
     --output_dir 'data/generated/moses_canonical_BEP_1.csv'
+
+
+python guacamoliency/modeling/generate.py \
+    --model moses_canonical \
+    --model_dir 'models/trained_moses_canonical_BEP/3/final_model' \
+    --num_sequence 15000 \
+    --temperature 1 \
+    --output_dir 'data/generated/moses_canonical_BEP_3.csv'

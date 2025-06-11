@@ -15,4 +15,10 @@ python guacamoliency/BECNHMARK_moses.py \
 
 
 
+python guacamoliency/BENCHMARK_moses.py \
+    --input_dir data/generated/moses_canonical_BEP_3.csv \
+    --output_dir 'reports/data/BENCHMARK/BENCHMARK_MOSES_BPE.csv'\
+    --model_name "MolGPT_moses_canonical_BEP_3"\
+    --number_worker 5
+
 

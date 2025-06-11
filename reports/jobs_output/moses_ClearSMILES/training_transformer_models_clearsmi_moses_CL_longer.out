@@ -1,0 +1,74 @@
+your current dir is: /workdir/simlab_team/prabakaran/GuacaMoliency
+your workdir is: /scratch/simlab_team/106331.torque1.cluster.lbt/
+number of nodes: 1
+number of cores: 16
+your execution environment: node061.cluster.lbt
+cuda:0
+Training start
+{'loss': 2.4485, 'grad_norm': 1068308.625, 'learning_rate': 0.0, 'epoch': 0.0}
+{'loss': 0.3723, 'grad_norm': 8035.4765625, 'learning_rate': 0.0005990923713675226, 'epoch': 0.97}
+{'eval_loss': 0.5399375557899475, 'eval_runtime': 356.6436, 'eval_samples_per_second': 492.293, 'eval_steps_per_second': 30.77, 'epoch': 0.97}
+{'loss': 0.2601, 'grad_norm': 6181.376953125, 'learning_rate': 0.0005953738846175925, 'epoch': 1.94}
+{'eval_loss': 0.5115475654602051, 'eval_runtime': 356.9894, 'eval_samples_per_second': 491.816, 'eval_steps_per_second': 30.74, 'epoch': 1.94}
+{'loss': 0.2496, 'grad_norm': 5455.9990234375, 'learning_rate': 0.000588822730911473, 'epoch': 2.92}
+{'eval_loss': 0.498174250125885, 'eval_runtime': 361.1793, 'eval_samples_per_second': 486.11, 'eval_steps_per_second': 30.384, 'epoch': 2.92}
+{'loss': 0.2442, 'grad_norm': 4829.35400390625, 'learning_rate': 0.0005795088388958919, 'epoch': 3.89}
+{'eval_loss': 0.4912272095680237, 'eval_runtime': 355.6844, 'eval_samples_per_second': 493.62, 'eval_steps_per_second': 30.853, 'epoch': 3.89}
+{'loss': 0.2407, 'grad_norm': 5113.56494140625, 'learning_rate': 0.0005675316273745652, 'epoch': 4.86}
+{'eval_loss': 0.4843443036079407, 'eval_runtime': 357.2993, 'eval_samples_per_second': 491.389, 'eval_steps_per_second': 30.714, 'epoch': 4.86}
+{'loss': 0.2382, 'grad_norm': 5732.14111328125, 'learning_rate': 0.0005530189440871172, 'epoch': 5.83}
+{'eval_loss': 0.48034319281578064, 'eval_runtime': 357.1333, 'eval_samples_per_second': 491.618, 'eval_steps_per_second': 30.728, 'epoch': 5.83}
+{'loss': 0.2363, 'grad_norm': 6157.53759765625, 'learning_rate': 0.0005361257010304585, 'epoch': 6.8}
+{'eval_loss': 0.4775223135948181, 'eval_runtime': 356.9626, 'eval_samples_per_second': 491.853, 'eval_steps_per_second': 30.743, 'epoch': 6.8}
+{'loss': 0.2346, 'grad_norm': 3866.382080078125, 'learning_rate': 0.0005170322208895377, 'epoch': 7.77}
+{'eval_loss': 0.47477203607559204, 'eval_runtime': 357.1373, 'eval_samples_per_second': 491.612, 'eval_steps_per_second': 30.728, 'epoch': 7.77}
+{'loss': 0.2332, 'grad_norm': 4254.43310546875, 'learning_rate': 0.0004959423122280789, 'epoch': 8.75}
+{'eval_loss': 0.4729244112968445, 'eval_runtime': 357.3891, 'eval_samples_per_second': 491.266, 'eval_steps_per_second': 30.706, 'epoch': 8.75}
+{'loss': 0.2321, 'grad_norm': 5209.544921875, 'learning_rate': 0.00047308109398519883, 'epoch': 9.72}
+{'eval_loss': 0.4707542955875397, 'eval_runtime': 355.8172, 'eval_samples_per_second': 493.436, 'eval_steps_per_second': 30.842, 'epoch': 9.72}
+{'loss': 0.231, 'grad_norm': 3765.192626953125, 'learning_rate': 0.0004486925924997671, 'epoch': 10.69}
+{'eval_loss': 0.46861734986305237, 'eval_runtime': 356.9705, 'eval_samples_per_second': 491.842, 'eval_steps_per_second': 30.742, 'epoch': 10.69}
+{'loss': 0.23, 'grad_norm': 4140.0185546875, 'learning_rate': 0.0004230371367124715, 'epoch': 11.66}
+{'eval_loss': 0.4668956398963928, 'eval_runtime': 357.5269, 'eval_samples_per_second': 491.076, 'eval_steps_per_second': 30.694, 'epoch': 11.66}
+{'loss': 0.2289, 'grad_norm': 4900.93310546875, 'learning_rate': 0.00039638857934985093, 'epoch': 12.63}
+{'eval_loss': 0.46541720628738403, 'eval_runtime': 356.6003, 'eval_samples_per_second': 492.352, 'eval_steps_per_second': 30.774, 'epoch': 12.63}
+{'loss': 0.2281, 'grad_norm': 5106.59423828125, 'learning_rate': 0.0003690313737520671, 'epoch': 13.61}
+{'eval_loss': 0.46379488706588745, 'eval_runtime': 357.0574, 'eval_samples_per_second': 491.722, 'eval_steps_per_second': 30.735, 'epoch': 13.61}
+{'loss': 0.2271, 'grad_norm': 4064.21728515625, 'learning_rate': 0.00034125753754708733, 'epoch': 14.58}
+{'eval_loss': 0.46204614639282227, 'eval_runtime': 355.7863, 'eval_samples_per_second': 493.479, 'eval_steps_per_second': 30.844, 'epoch': 14.58}
+{'loss': 0.2262, 'grad_norm': 4586.73193359375, 'learning_rate': 0.0003133635355817742, 'epoch': 15.55}
+{'eval_loss': 0.4603501856327057, 'eval_runtime': 360.061, 'eval_samples_per_second': 487.62, 'eval_steps_per_second': 30.478, 'epoch': 15.55}
+{'loss': 0.2254, 'grad_norm': 5582.3515625, 'learning_rate': 0.0002856471153822524, 'epoch': 16.52}
+{'eval_loss': 0.45925623178482056, 'eval_runtime': 357.1535, 'eval_samples_per_second': 491.59, 'eval_steps_per_second': 30.726, 'epoch': 16.52}
+{'loss': 0.2246, 'grad_norm': 5125.7744140625, 'learning_rate': 0.00025840412892263857, 'epoch': 17.49}
+{'eval_loss': 0.4580841660499573, 'eval_runtime': 358.169, 'eval_samples_per_second': 490.196, 'eval_steps_per_second': 30.639, 'epoch': 17.49}
+{'loss': 0.2238, 'grad_norm': 4515.091796875, 'learning_rate': 0.00023192537462736406, 'epoch': 18.46}
+{'eval_loss': 0.4570634067058563, 'eval_runtime': 358.8693, 'eval_samples_per_second': 489.239, 'eval_steps_per_second': 30.579, 'epoch': 18.46}
+{'loss': 0.2229, 'grad_norm': 5518.35400390625, 'learning_rate': 0.00020649349331634736, 'epoch': 19.44}
+{'eval_loss': 0.455035001039505, 'eval_runtime': 356.9855, 'eval_samples_per_second': 491.821, 'eval_steps_per_second': 30.741, 'epoch': 19.44}
+{'loss': 0.2221, 'grad_norm': 6109.55517578125, 'learning_rate': 0.00018237995122646872, 'epoch': 20.41}
+{'eval_loss': 0.4539346694946289, 'eval_runtime': 356.5054, 'eval_samples_per_second': 492.483, 'eval_steps_per_second': 30.782, 'epoch': 20.41}
+{'loss': 0.2213, 'grad_norm': 5470.50146484375, 'learning_rate': 0.00015984214231332838, 'epoch': 21.38}
+{'eval_loss': 0.4529169201850891, 'eval_runtime': 357.5859, 'eval_samples_per_second': 490.995, 'eval_steps_per_second': 30.689, 'epoch': 21.38}
+{'loss': 0.2206, 'grad_norm': 4572.0341796875, 'learning_rate': 0.0001391206407640402, 'epoch': 22.35}
+{'eval_loss': 0.45193541049957275, 'eval_runtime': 358.5584, 'eval_samples_per_second': 489.664, 'eval_steps_per_second': 30.606, 'epoch': 22.35}
+{'loss': 0.22, 'grad_norm': 4592.02294921875, 'learning_rate': 0.00012043663304842543, 'epoch': 23.32}
+{'eval_loss': 0.45056793093681335, 'eval_runtime': 362.1729, 'eval_samples_per_second': 484.777, 'eval_steps_per_second': 30.3, 'epoch': 23.32}
+{'loss': 0.2192, 'grad_norm': 5376.69140625, 'learning_rate': 0.00010398955691953003, 'epoch': 24.3}
+{'eval_loss': 0.4499657452106476, 'eval_runtime': 358.7267, 'eval_samples_per_second': 489.434, 'eval_steps_per_second': 30.592, 'epoch': 24.3}
+{'loss': 0.2188, 'grad_norm': 4931.125, 'learning_rate': 8.995497256536337e-05, 'epoch': 25.27}
+{'eval_loss': 0.44924071431159973, 'eval_runtime': 357.7642, 'eval_samples_per_second': 490.751, 'eval_steps_per_second': 30.674, 'epoch': 25.27}
+{'loss': 0.2181, 'grad_norm': 4877.99169921875, 'learning_rate': 7.848268863571471e-05, 'epoch': 26.24}
+{'eval_loss': 0.448550820350647, 'eval_runtime': 356.2994, 'eval_samples_per_second': 492.768, 'eval_steps_per_second': 30.8, 'epoch': 26.24}
+{'loss': 0.2177, 'grad_norm': 5057.62109375, 'learning_rate': 6.969516314730405e-05, 'epoch': 27.21}
+{'eval_loss': 0.4479023814201355, 'eval_runtime': 359.8686, 'eval_samples_per_second': 487.881, 'eval_steps_per_second': 30.494, 'epoch': 27.21}
+{'loss': 0.2174, 'grad_norm': 4794.55419921875, 'learning_rate': 6.368619633640396e-05, 'epoch': 28.18}
+{'eval_loss': 0.44747039675712585, 'eval_runtime': 358.9055, 'eval_samples_per_second': 489.19, 'eval_steps_per_second': 30.576, 'epoch': 28.18}
+{'loss': 0.2171, 'grad_norm': 5345.86865234375, 'learning_rate': 6.0519929411749366e-05, 'epoch': 29.15}
+{'eval_loss': 0.4473184645175934, 'eval_runtime': 357.9645, 'eval_samples_per_second': 490.476, 'eval_steps_per_second': 30.657, 'epoch': 29.15}
+{'train_runtime': 29460.316, 'train_samples_per_second': 1595.421, 'train_steps_per_second': 2.077, 'train_loss': 0.23309209952167437, 'epoch': 29.74}
+Data from this directory : data/training_data/moses_ClearSMILES.csv
+Tokenizer from this directory : data/tokenizers_character_level/moses_ClearSMILES
+log files are in this directory : reports/logs/moses_ClearSMILES_character_level/3
+Model and checkpoint of training has been save in this directory : models/trained_moses_ClearSMILES_character_level/3
+END OF train.py

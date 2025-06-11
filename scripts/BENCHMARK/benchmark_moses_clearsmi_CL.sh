@@ -6,10 +6,17 @@ python guacamoliency/BECNHMARK_moses.py \
     --number_worker 5
 
 python guacamoliency/BECNHMARK_moses.py \
-    --input_dir data/generated/moses_ClearSMILES_CL_2.csv \
+    --input_dir data/generated/moses_ClearSMILES_CL_3.csv \
     --output_dir 'reports/data/BENCHMARK.csv'\
-    --model_name "MolGPT_moses_ClearSMILES_characterlevel_2"\
+    --model_name "MolGPT_moses_ClearSMILES_characterlevel_3"\
     --number_worker 5
+
+python guacamoliency/BECNHMARK_moses.py \
+    --input_dir data/generated/moses_ClearSMILES_CL_4.csv \
+    --output_dir 'reports/data/BENCHMARK.csv'\
+    --model_name "MolGPT_moses_ClearSMILES_characterlevel_4"\
+    --number_worker 5
+
 
 
 python guacamoliency/BECNHMARK_moses.py \
@@ -23,8 +30,6 @@ python guacamoliency/BECNHMARK_moses.py \
     --output_dir 'reports/data/BENCHMARK.csv'\
     --model_name "MolGPT_moses_ClearSMILES_characterlevel_1_without_old"\
     --number_worker 5
-
-
 
 
 for i in 1 2 3 4 5

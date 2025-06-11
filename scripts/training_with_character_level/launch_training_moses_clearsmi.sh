@@ -9,10 +9,10 @@ python guacamoliency/modeling/train.py --tokenizer_path data/tokenizers_characte
     --log_dir reports \
     --dataset_dir data/training_data/moses_ClearSMILES.csv \
     --model_save_folder models/trained_moses_ClearSMILES \
-    --learning_rate 1e-3 \
-    --max_steps 41200 \
+    --learning_rate 6e-4 \
+    --max_steps 31200 \
     --batch_size 384 \
-    --save_steps 50000 \
+    --save_steps 30000 \
     --save_total_limit 3 \
     --warmup_steps 412 #1% du total training set de base
 

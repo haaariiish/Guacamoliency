@@ -25,9 +25,20 @@ def main():
     dataset = df["SMILES"].to_list()
 
     dataset = [k for k in dataset if isinstance(k,str)]
-    data_length = len(dataset)
+    
 
-    metrics = moses.get_all_metrics(dataset,n_jobs = args.number_worker)
+    data_length = len(dataset)
+    try:
+        metrics = moses.get_all_metrics(dataset,n_jobs = args.number_worker)
+    except ValueError as e:
+        print("Error in calculating metrics:", e)
+        if data_length>10000:
+            print("the length of the dataset is maybe too high, please reduce the number of SMILES in the dataset")
+            dataset = sample(dataset,10000)
+            metrics = moses.get_all_metrics(dataset,n_jobs = args.number_worker)
+    except Exception as e:
+        print("An unexpected error occurred:", e)
+        metrics = {}
     print(metrics)
     metrics["model_name"] = args.model_name
     metrics["sample length"] = data_length
