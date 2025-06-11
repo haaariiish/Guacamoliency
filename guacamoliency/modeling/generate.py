@@ -75,6 +75,6 @@ def main():
     smiles_set["SMILES"] = generated_smiles
     
 
-    smiles_set.to_csv(args.output_dir)
+    smiles_set.to_csv(args.output_dir, index=False)
 if __name__ == "__main__":
     main()
