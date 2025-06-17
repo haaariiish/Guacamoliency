@@ -16,7 +16,7 @@ def main(
 ):
     parser = argparse.ArgumentParser()
 
-    parser.add_argument('--input_dir',type=str,default="data/raw/inchie_logic_data/unique_inchi_keys.csv",
+    parser.add_argument('--input_dir',type=str,default="data/training_data/inchie_logic_data/unique_inchi_keys.csv",
                         required=False)
     parser.add_argument('--model_max_length', type = int, default=14,
                     help="words max length", required=False)

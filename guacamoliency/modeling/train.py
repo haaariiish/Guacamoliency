@@ -21,6 +21,18 @@ def tokenize_func2(examples, tokenizer,max_length):
         max_length=max_length
     )
 
+def tokenize_func3(examples, tokenizer,max_length):
+    smiles = examples["SELFIES"]
+    smiles = [s for s in smiles if isinstance(s, str) or s is not None]
+
+    return tokenizer(
+        smiles, 
+        padding="max_length", 
+        truncation=True, 
+        max_length=max_length
+    )
+
+
 
 
 """def debug_func(example,tokenizer):
@@ -139,10 +151,14 @@ def main():
     if args.tokenizer_type == "INCHIES":
         encoded_training_set = training_set.map(partial(tokenize_func2, tokenizer=tokenizer, max_length=tokenizer.model_max_length), batched=True,  remove_columns=training_set.column_names)
 
-           
-
         encoded_eval_set = eval_set.map(partial(tokenize_func2, tokenizer=tokenizer, max_length=tokenizer.model_max_length), batched=True, remove_columns=eval_set.column_names)
     
+    elif args.tokenizer_type == "SELFIES":
+        encoded_training_set = training_set.map(partial(tokenize_func3, tokenizer=tokenizer, max_length=tokenizer.model_max_length), batched=True,  remove_columns=training_set.column_names)
+
+        encoded_eval_set = eval_set.map(partial(tokenize_func3, tokenizer=tokenizer, max_length=tokenizer.model_max_length), batched=True, remove_columns=eval_set.column_names)
+    
+
     else :
         encoded_training_set = training_set.map(partial(tokenize_func, tokenizer=tokenizer, max_length=tokenizer.model_max_length), batched=True,  remove_columns=training_set.column_names)
         encoded_eval_set = eval_set.map(partial(tokenize_func, tokenizer=tokenizer, max_length=tokenizer.model_max_length), batched=True, remove_columns=eval_set.column_names)

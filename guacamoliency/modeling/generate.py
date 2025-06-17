@@ -6,6 +6,7 @@ import pandas as pd
 from torch import nn
 import torch
 from datasets import Dataset
+import selfies as sf
 
 from functools import partial
 
@@ -72,7 +73,14 @@ def main():
 
     smiles_set = pd.DataFrame()
 
-    smiles_set["SMILES"] = generated_smiles
+    if "INCHIES" in args.model_dir : 
+        smiles_set["INCHIES"] = generated_smiles
+
+    elif "SELFIES" in args.model_dir:
+        smiles_set["SELFIES"] = generated_smiles
+        smiles_set["SMILES"] = smiles_set["SELFIES"].apply(sf.decoder)
+    else :
+        smiles_set["SMILES"] = generated_smiles
     
 
     smiles_set.to_csv(args.output_dir, index=False)
