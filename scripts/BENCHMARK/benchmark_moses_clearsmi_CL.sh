@@ -40,3 +40,8 @@ python guacamoliency/BENCHMARK_moses.py \
     --model_name "MolGPT_moses_ClearSMILES_characterlevel_1_$i"\
     --number_worker 5
 done
+python guacamoliency/BENCHMARK_moses.py \
+    --input_dir data/generated/30000samples_ClearSMILES_cl_5.csv \
+    --output_dir 'reports/data/BENCHMARK/BENCHMARK.csv'\
+    --model_name "MolGPT_moses_ClearSMILES_CL_5"\
+    --number_worker 30

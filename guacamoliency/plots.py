@@ -167,9 +167,9 @@ def main():
     # Optionally: overlay scatter points at y=0 for both datasets
     ax.plot(generated_qed, [0]*len(generated_qed), 'd', label='generated points', alpha=0.5)
     ax.plot(training_qed, [0]*len(training_qed), 'o', label='training points', alpha=0.5)
-
+    ax.grid()
     # Labels and title
-    ax.set_ylabel('Number per bin')
+    ax.set_ylabel('Value')
     ax.set_xlabel('QED')
     ax.set_title('Density of SMILES according to QED ')
     ax.legend()
@@ -193,9 +193,9 @@ def main():
     # Optionally: overlay scatter points at y=0 for both datasets
     ax.plot(generated_logp, [0]*len(generated_logp), 'd', label='generated points', alpha=0.5)
     ax.plot(training_logp, [0]*len(training_logp), 'o', label='training points', alpha=0.5)
-
+    ax.grid()
     # Labels and title
-    ax.set_ylabel('Number per bin')
+    ax.set_ylabel('Value')
     ax.set_xlabel('LogP')
     ax.set_title('Density of SMILES according to LogP ')
     ax.legend()

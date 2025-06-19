@@ -87,14 +87,20 @@ def main():
                 scores = attributions.sum(dim=-1).squeeze()
                 tokens = tokenizer.convert_ids_to_tokens(input_ids[0])
 
-            max_arg = input_ids[0][scores[:len(scores)-args.threshold].argmax()].item()
-            counting[max_arg] += 1
+
+            try:
+                max_arg = input_ids[0][scores[:len(scores)-args.threshold].argmax()].item()
+                counting[max_arg] += 1
+                normalized_scores = sf2(scores)
+                for i in range(len(normalized_scores)):
+                    total_scoring[len(normalized_scores)-i-1] += normalized_scores[i]
+                    counting_occurences[len(normalized_scores)-i-1] += 1
+            except Exception as e:
+                print(e)
+            
 
 
-            normalized_scores = sf2(scores)
-            for i in range(len(normalized_scores)):
-                total_scoring[len(normalized_scores)-i-1] += normalized_scores[i]
-                counting_occurences[len(normalized_scores)-i-1] += 1
+            
 
             
 
