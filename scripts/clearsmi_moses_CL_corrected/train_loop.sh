@@ -1,6 +1,6 @@
 # Launch training 
 
-for (( c=0; c<3; c++ ))
+for (( c=0; c<1; c++ ))
 
 do
 

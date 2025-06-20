@@ -10,4 +10,3 @@ python guacamoliency/modeling/generate.py \
 
 echo "job $c done" 
 done
-
