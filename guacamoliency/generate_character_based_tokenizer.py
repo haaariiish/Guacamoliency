@@ -36,15 +36,16 @@ def main(
      # approche simple mais faut ajouter tous les termes entre crochet (le pattern va splitter [nH] en "[nH]" mais ne prend pas en compte les crochets seuls)
 
 
-    pattern =r"(\[[^\]]+]|<|Br?|Cl?|N|O|S|P|F|I|b|c|n|o|s|p|\(|\)|\.|=|#|-|\+|\\\\|\/|:|~|@|\?|>|\*|\$|\%[0-9]{2}|[0-9])"
+    pattern =r"(\[[^\]]+]|<|Br?|Cl?|N|O|S|P|F|I|b|c|n|o|s|p|\(|\)|\.|=|#|-|\+|\\\\|\/|:|~|@|\?|>|\*|\$|[0-9])"
     
     
     
-    alphabet = [
+    """alphabet = [
         "[", "]", "<", ">", "Br", "Cl", "B", "C", "N", "O", "S", "P", "F", "I",
         "b", "c", "n", "o", "s", "p",
         "(", ")", ".", "=", "#", "-", "+", "\\", "/", ":", "~", "@", "?", "*", "$"
-    ]  + [str(i) for i in range(10)]
+    ]  + [str(i) for i in range(10)]"""
+    alphabet = []
     alphabet += special_tokens
     alphabet = set(alphabet)
 

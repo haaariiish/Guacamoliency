@@ -9,10 +9,10 @@ python guacamoliency/modeling/train.py --tokenizer_path data/tokenizers_characte
     --log_dir reports \
     --dataset_dir data/training_data/moses_canonical.csv \
     --model_save_folder models/trained_moses_canonical \
-    --learning_rate 6e-4 \
+    --learning_rate 1e-3 \
     --max_steps 41300 \
     --batch_size 384 \
-    --save_steps 10000 \
+    --save_steps 60000 \
     --warmup_steps 413 \
     --save_total_limit 3
 

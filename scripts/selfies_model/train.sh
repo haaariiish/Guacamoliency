@@ -1,0 +1,12 @@
+python guacamoliency/modeling/train.py --tokenizer_path data/tokenizers_selfies/moses_selfies \
+    --tokenizer_type "SELFIES" \
+    --datasets moses_SELFIES \
+    --log_dir reports \
+    --dataset_dir data/training_data/moses_selfies.csv \
+    --model_save_folder models/trained_moses_selfies \
+    --learning_rate 6e-4 \
+    --max_steps 41300 \
+    --batch_size 384 \
+    --save_steps 60000 \
+    --warmup_steps 413 \
+    --save_total_limit 3

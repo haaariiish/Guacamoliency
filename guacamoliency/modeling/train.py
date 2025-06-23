@@ -9,6 +9,32 @@ def tokenize_func(examples, tokenizer,max_length):
         max_length=max_length
     )
 
+
+def tokenize_func2(examples, tokenizer,max_length):
+    smiles = examples["inchkey_encoding"]
+    smiles = [s for s in smiles if isinstance(s, str) or s is not None]
+
+    return tokenizer(
+        smiles, 
+        padding="max_length", 
+        truncation=True, 
+        max_length=max_length
+    )
+
+def tokenize_func3(examples, tokenizer,max_length):
+    smiles = examples["SELFIES"]
+    smiles = [s for s in smiles if isinstance(s, str) or s is not None]
+
+    return tokenizer(
+        smiles, 
+        padding="max_length", 
+        truncation=True, 
+        max_length=max_length
+    )
+
+
+
+
 """def debug_func(example,tokenizer):
     ids = tokenizer(example["SMILES"])["input_ids"]
     
@@ -122,16 +148,21 @@ def main():
 
     eval_set = data_set[data_set['SPLIT']=='test']
     eval_set = Dataset.from_pandas(eval_set)
+    if args.tokenizer_type == "INCHIES":
+        encoded_training_set = training_set.map(partial(tokenize_func2, tokenizer=tokenizer, max_length=tokenizer.model_max_length), batched=True,  remove_columns=training_set.column_names)
 
-    encoded_training_set = training_set.map(partial(tokenize_func, tokenizer=tokenizer, max_length=tokenizer.model_max_length), batched=True,  remove_columns=training_set.column_names)
-   
-    #encoded_training_set = training_set.map(tokenize_func, batched=True, remove_columns=["SMILES"])
-
-    encoded_eval_set = eval_set.map(partial(tokenize_func, tokenizer=tokenizer, max_length=tokenizer.model_max_length), batched=True, remove_columns=eval_set.column_names)
-    #encoded_eval_set = eval_set.map(partial(debug_func, tokenizer=tokenizer), batched=True, remove_columns=eval_set.column_names)
+        encoded_eval_set = eval_set.map(partial(tokenize_func2, tokenizer=tokenizer, max_length=tokenizer.model_max_length), batched=True, remove_columns=eval_set.column_names)
     
-    #encoded_eval_set = eval_set.map(tokenize_func, batched=True, remove_columns=eval_set.column_names)
-    #encoded_training_set = encoded_eval_set
+    elif args.tokenizer_type == "SELFIES":
+        encoded_training_set = training_set.map(partial(tokenize_func3, tokenizer=tokenizer, max_length=tokenizer.model_max_length), batched=True,  remove_columns=training_set.column_names)
+
+        encoded_eval_set = eval_set.map(partial(tokenize_func3, tokenizer=tokenizer, max_length=tokenizer.model_max_length), batched=True, remove_columns=eval_set.column_names)
+    
+
+    else :
+        encoded_training_set = training_set.map(partial(tokenize_func, tokenizer=tokenizer, max_length=tokenizer.model_max_length), batched=True,  remove_columns=training_set.column_names)
+        encoded_eval_set = eval_set.map(partial(tokenize_func, tokenizer=tokenizer, max_length=tokenizer.model_max_length), batched=True, remove_columns=eval_set.column_names)
+        
 
     vocab_size = tokenizer.vocab_size
     #print(vocab_size)
@@ -167,7 +198,7 @@ def main():
         id_save +=1
     model_save_folder = model_save_folder+"/"+str(id_save)
     log_dir_end = args.datasets + "_" + args.tokenizer_type +"/"+ str(id_save)
-
+    os.makedirs(model_save_folder, exist_ok=True)
 
     #training arguments
     training_args = TrainingArguments(
@@ -215,6 +246,8 @@ def main():
     print("Training start")
 
     trainer.train()
+    
+  
     trainer.save_model(model_save_folder+"/final_model")
     
     print("Data from this directory : " + args.dataset_dir)

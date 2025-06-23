@@ -6,6 +6,7 @@ import pandas as pd
 from torch import nn
 import torch
 from datasets import Dataset
+import selfies as sf
 
 from functools import partial
 
@@ -53,25 +54,35 @@ def main():
     tokenizer = AutoTokenizer.from_pretrained(args.model_dir,local_files_only=True)
     # load Model
     model = AutoModelForCausalLM.from_pretrained(args.model_dir,local_files_only=True)
+    model.eval()
+    with torch.no_grad():
+        # génération ici
 
-    generated_ids = model.generate(
-      max_length = tokenizer.model_max_length,
-      num_return_sequences = args.num_sequence,
-      pad_token_id = tokenizer.pad_token_id,
-      bos_token_id = tokenizer.bos_token_id,
-      eos_token_id = tokenizer.eos_token_id,
-      do_sample = True,
-      temperature = args.temperature,
-      return_dict_in_generate = True,
-  )
+        generated_ids = model.generate(
+        max_length = tokenizer.model_max_length,
+        num_return_sequences = args.num_sequence,
+        pad_token_id = tokenizer.pad_token_id,
+        bos_token_id = tokenizer.bos_token_id,
+        eos_token_id = tokenizer.eos_token_id,
+        do_sample = True,
+        temperature = args.temperature,
+        return_dict_in_generate = True,
+    )
     #print(generated_ids.keys())
-    generated_smiles = [tokenizer.decode(output, skip_special_tokens=(not mscaffolds)).replace(" ","") for output in generated_ids['sequences']]
+        generated_smiles = [tokenizer.decode(output, skip_special_tokens=(not mscaffolds)).replace(" ","") for output in generated_ids['sequences']]
 
     smiles_set = pd.DataFrame()
 
-    smiles_set["SMILES"] = generated_smiles
+    if "INCHIES" in args.model_dir : 
+        smiles_set["INCHIES"] = generated_smiles
+
+    elif "SELFIES" in args.model_dir:
+        smiles_set["SELFIES"] = generated_smiles
+        smiles_set["SMILES"] = smiles_set["SELFIES"].apply(sf.decoder)
+    else :
+        smiles_set["SMILES"] = generated_smiles
     
 
-    smiles_set.to_csv(args.output_dir)
+    smiles_set.to_csv(args.output_dir, index=False)
 if __name__ == "__main__":
     main()

@@ -12,12 +12,12 @@ python guacamoliency/modeling/train.py --tokenizer_path data/tokenizers_characte
     --learning_rate 6e-4 \
     --max_steps 41200 \
     --batch_size 384 \
-    --save_steps 10000 \
+    --save_steps 300000 \
     --save_total_limit 3 \
-    --warmup_steps 412
+    --warmup_steps 412 #1% du total training set de base
 
   
-
+#de base c'est 6e-4 le learning rate
 
 #python run_workflow.py ed
 

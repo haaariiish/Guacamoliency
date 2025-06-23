@@ -2,6 +2,6 @@ python guacamoliency/generate_character_based_tokenizer.py --input_dir data/data
 
 python guacamoliency/generate_character_based_tokenizer.py --input_dir data/data_tokenizer/guacamol_canonical.csv --input guacamol_canonical --model_max_length 103
 
-python guacamoliency/generate_character_based_tokenizer.py --input_dir data/data_tokenizer/moses_canonical.csv --input moses_canonical --model_max_length 61
+python guacamoliency/generate_character_based_tokenizer.py --input_dir data/data_tokenizer/moses_canonical.csv --input moses_canonical_corrected --model_max_length 61
 
 #python guacamoliency/generate_character_based_tokenizer.py --input_dir data/training_data/guacamol_and_moses_canonical.csv --input guacamol_and_moses_canonical --model_max_length 103

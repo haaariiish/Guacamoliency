@@ -30,7 +30,7 @@ def main():
     parser.add_argument('--dataset', type = str, default='data/generated/moses_canonical_BEP_2.csv',
                         help="where is your generated data", required=True)
     
-    parser.add_argument('--output_dir', type = str, default='reports/data/moses_canonical_BEP/2/histogram_saliency.png',
+    parser.add_argument('--output_dir', type = str, default='reports/data/moses_canonical_BEP/2',
                         help="where save our outputs", required=True)
 
     parser.add_argument('--threshold', type = int, default=0,
@@ -45,10 +45,13 @@ def main():
     tokenizer = AutoTokenizer.from_pretrained(args.model_dir)
     tokenizer.model_max_length += 1 
     model = AutoModelForCausalLM.from_pretrained(args.model_dir)
+    model.eval()
     dataset = pd.read_csv(args.dataset)["SMILES"].to_list()
     dataset = [k for k in dataset if isinstance(k,str)]
 
     counting = [0] * len(tokenizer)
+    total_scoring = [0] * tokenizer.model_max_length
+    counting_occurences = [0] * tokenizer.model_max_length
     sf = torch.nn.Softmax(1)
     sf2 = torch.nn.Softmax(0)
     saliency = Saliency(partial(forward_func, model=model))
@@ -57,9 +60,9 @@ def main():
         inputs = tokenizer(k, return_tensors="pt")
         
         idxs = []
-        for k in range(len(inputs_tokens)):
-            if inputs_tokens[k] == args.verified_token:
-                idxs.append(k)
+        for l in range(len(inputs_tokens)):
+            if inputs_tokens[l] == args.verified_token:
+                idxs.append(l)
 
         for idx in idxs:
             
@@ -84,14 +87,26 @@ def main():
                 scores = attributions.sum(dim=-1).squeeze()
                 tokens = tokenizer.convert_ids_to_tokens(input_ids[0])
 
-            max_arg = input_ids[0][scores[:len(scores)-args.threshold].argmax()].item()
 
-            counting[max_arg] += 1
+            try:
+                max_arg = input_ids[0][scores[:len(scores)-args.threshold].argmax()].item()
+                counting[max_arg] += 1
+                normalized_scores = sf2(scores)
+                for i in range(len(normalized_scores)):
+                    total_scoring[len(normalized_scores)-i-1] += normalized_scores[i]
+                    counting_occurences[len(normalized_scores)-i-1] += 1
+            except Exception as e:
+                print(e)
+            
+
+
+            
+
+            
 
             
     
-
-
+    #plot of histogram of which are the best rated token for saliency
     
     x_bins = [ k  for k in range(len(tokenizer)+1)]
     #print(len(tokenizer))
@@ -104,28 +119,44 @@ def main():
     saliency_data = pd.DataFrame()
     saliency_data["vocabulary"] = vocabulary
     saliency_data["counting"] = counting
-
-    spliting = os.path.splitext(args.output_dir)
-    
-    dir_for_data = spliting[0]+"_threshold"+str(args.threshold)+"_sample_length"+str(len(dataset))
-
+    dir_for_data = args.output_dir+"/histo_saliency_threshold"+str(args.threshold)+"_sample_length"+str(len(dataset))
     saliency_data.to_csv(dir_for_data+".csv")
 
-
-
     vocabulary = ["" if counting[k]<100 else vocabulary[k] for k in range(len(vocabulary))]
-
     ax.bar(vocabulary,counting, alpha=0.6, label=args.model)
-
-    
     ax.set_ylabel('Number per bar')
-    ax.set_xlabel('tokens')
-    ax.set_title('Density of tokens count according to the saliency - threshold of '+str(args.threshold) +' - token chosen : '+ args.verified_token)
+    ax.set_xlabel('Tokens')
+    ax.set_title('Density of tokens count according to the saliency - threshold of '+str(args.threshold))
     ax.legend()
     ax.grid()
-    plt.savefig(dir_for_data+spliting[1])  
+    plt.savefig(dir_for_data+".png")  
     
     
+    #plot for saliency according to distance
+
+    dir_for_data = args.output_dir+"/saliency_according_distance_sample_length"+str(len(dataset))
+
+    if not os.path.exists(dir_for_data+".csv") or not os.path.exists(dir_for_data+".png"):
+        total_scoring = [(total_scoring[k]/counting_occurences[k]).item() if counting_occurences[k]!=0 else total_scoring[k] for k in range(len(total_scoring)) ]
+        x_bins = [k for k in range(len(total_scoring))]
+
+        fig, ax = plt.subplots()
+
+        df = pd.DataFrame()
+        df["total_scores"] = total_scoring
+        df["occurences"] = counting_occurences
+        df.to_csv(dir_for_data+".csv")
+
+        ax.plot(x_bins,total_scoring,label=args.model)
+        ax.set_ylabel('Mean of normalised score')
+        ax.set_xlabel('Distance to the generated token')
+        ax.set_title('Saliency of models according to the distance - token chosen : '+ args.verified_token)
+        ax.grid()
+        ax.legend()
+
+        plt.savefig(dir_for_data+".png")  
+    else : 
+        print("les plots de saliency selon la distance existe déjà")
 
 if __name__ == "__main__":
     main()
