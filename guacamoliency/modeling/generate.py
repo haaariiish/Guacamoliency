@@ -56,8 +56,7 @@ def main():
     model = AutoModelForCausalLM.from_pretrained(args.model_dir,local_files_only=True)
     model.eval()
     with torch.no_grad():
-        # génération ici
-
+        # generation 
         generated_ids = model.generate(
         max_length = tokenizer.model_max_length,
         num_return_sequences = args.num_sequence,
@@ -69,20 +68,23 @@ def main():
         return_dict_in_generate = True,
     )
     #print(generated_ids.keys())
+    # Decode generated sequences from id to SMILES or SELFIES
         generated_smiles = [tokenizer.decode(output, skip_special_tokens=(not mscaffolds)).replace(" ","") for output in generated_ids['sequences']]
 
     smiles_set = pd.DataFrame()
 
+    # If the model is trained on INCHIES, we save the generated SMILES in a column called INCHIES
     if "INCHIES" in args.model_dir : 
         smiles_set["INCHIES"] = generated_smiles
-
+    # If the model is trained on SELFIES, we save the generated SMILES in a column called SELFIES and decode them to SMILES
     elif "SELFIES" in args.model_dir:
         smiles_set["SELFIES"] = generated_smiles
         smiles_set["SMILES"] = smiles_set["SELFIES"].apply(sf.decoder)
+    # If the model is trained on SMILES, we save the generated SMILES in a column called SMILES
     else :
         smiles_set["SMILES"] = generated_smiles
     
-
+    #save the generated SMILES in a csv file
     smiles_set.to_csv(args.output_dir, index=False)
 if __name__ == "__main__":
     main()
