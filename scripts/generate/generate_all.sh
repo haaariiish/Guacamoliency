@@ -61,8 +61,8 @@ python guacamoliency/modeling/generate.py \
 python guacamoliency/modeling/generate.py \
     --model moses_ClearSMILES \
     --model_dir 'models/trained_moses_ClearSMILES_character_level/4/final_model' \
-    --num_sequence 10000 \
+    --num_sequence 100 \
     --temperature 1 \
-    --output_dir "data/generated/moses_ClearSMILES_CL_4.csv"
+    --output_dir "data/generated/moses_ClearSMILES_CL_4_test.csv"
 
 
