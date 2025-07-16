@@ -23,14 +23,14 @@ def main(
     parser.add_argument('--model_max_length', type = int, default=56,
                     help="words max length", required=False)
     args = parser.parse_args()
-   
+    # load dataset
     dataset = pd.read_csv(args.input_dir)
     dataset = dataset['SELFIES'].tolist()
     dataset = [k for k in dataset if type(k) == str ]
 
     special_tokens = ["<bos>", "<eos>", "<pad>","<unk>"]
 
-
+    # Regex to catch all terms between brackets 
     pattern = r'\[[^\]]+\]'
      # approche simple mais faut ajouter tous les termes entre crochet (le pattern va splitter [nH] en "[nH]" mais ne prend pas en compte les crochets seuls)
 
@@ -39,17 +39,20 @@ def main(
     for k in special_tokens:
         alphabet.add(k)
     
-
     for k in tqdm(dataset):
         for l in re.findall(pattern,k):
             alphabet.add(l)
 
     vocabulary = {token: idx for idx, token in enumerate(alphabet)}
     
-
+    # initialize tokenizer with WordLevel model with the vocabulary
+    # Note: models.WordLevel expects a vocabulary dictionary where keys are tokens and values are their corresponding indices.
+    # The unk_token is set to "<unk>" to handle unknown tokens.
     tokenizer = Tokenizer(models.WordLevel(vocabulary,unk_token = "<unk>"))
 
-    # Utiliser Split comme pré-tokeniseur basé sur regex
+    # Use Split pre-tokenizer to split the input text into tokens based on the regex pattern
+    # The behavior is set to "isolated" to ensure that the tokens are treated as separate entities.
+    # The invert parameter is set to False to ensure that the regex pattern is applied
     tokenizer.pre_tokenizer = pre_tokenizers.Split(Regex(pattern), behavior="isolated", invert=False)
 
     tokenizer.add_special_tokens(special_tokens)
@@ -65,7 +68,7 @@ def main(
     )
         
 
-    # Conversion vers PreTrainedTokenizerFast / UTILE? 
+    # Convert as a PreTrainedTokenizerFast 
     fast_tokenizer = PreTrainedTokenizerFast(tokenizer_object=tokenizer)
     fast_tokenizer.pad_token = "<pad>"
     fast_tokenizer.bos_token = "<bos>"
@@ -73,7 +76,7 @@ def main(
     fast_tokenizer.unk_token = "<unk>"
     fast_tokenizer.model_max_length = args.model_max_length+2
 
-    # Sauvegarde du tokenizer
+    # Save tokenizer to the specified directory
     fast_tokenizer.save_pretrained("data/tokenizers_selfies/"+args.input)
     print("Done")
 

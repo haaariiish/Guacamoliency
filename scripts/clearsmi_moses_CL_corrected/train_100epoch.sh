@@ -2,14 +2,14 @@
 
 python guacamoliency/modeling/train.py --tokenizer_path data/tokenizers_character_level/moses_ClearSMILES_corrected  \
     --tokenizer_type "character_level" \
-    --datasets moses_ClearSMILES_corrected \
+    --datasets moses_ClearSMILES_corrected_weightedLoss \
     --log_dir reports \
     --dataset_dir data/training_data/moses_ClearSMILES.csv \
-    --model_save_folder models/trained_moses_ClearSMILES_corrected \
+    --model_save_folder models/trained_moses_ClearSMILES_corrected_weightedLoss \
     --learning_rate 6e-4 \
     --max_steps 206000 \
     --batch_size 384 \
-    --save_steps 41200\
+    --save_steps 20600\
     --save_total_limit 6 \
     --warmup_steps 412 #1% du total training set de base
 

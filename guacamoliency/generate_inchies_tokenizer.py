@@ -22,8 +22,10 @@ def main(
                     help="words max length", required=False)
     args = parser.parse_args()
    
-    special_tokens = ["<bos>", "<eos>", "<pad>","<unk>"]
 
+
+    special_tokens = ["<bos>", "<eos>", "<pad>","<unk>"]
+    # load the initial alphabet from the CSV file
     alphabet = pd.read_csv(args.input_dir)["inchi_key"].tolist()
     
     alphabet += special_tokens
@@ -31,9 +33,10 @@ def main(
     alphabet = set(alphabet)
 
     
-
+    # Create a vocabulary mapping each token to a unique index
     vocabulary = {token: idx for idx, token in enumerate(alphabet)}
 
+    # create a tokenizer with the vocabulary
     tokenizer = Tokenizer(models.WordLevel(vocabulary,unk_token = "<unk>"))
 
     tokenizer.pre_tokenizer = pre_tokenizers.Split(Regex(r"[_]"), behavior="removed")
@@ -51,7 +54,7 @@ def main(
     )
         
 
-    # Conversion vers PreTrainedTokenizerFast / UTILE? 
+    #PreTrainedTokenizerFast
     fast_tokenizer = PreTrainedTokenizerFast(tokenizer_object=tokenizer)
     fast_tokenizer.pad_token = "<pad>"
     fast_tokenizer.bos_token = "<bos>"
@@ -59,7 +62,7 @@ def main(
     fast_tokenizer.unk_token = "<unk>"
     fast_tokenizer.model_max_length = args.model_max_length
 
-    # Sauvegarde du tokenizer
+    # Save the tokenizer and test it in a basic way
     fast_tokenizer.save_pretrained("data/tokenizers_inchies/moses_canonical")
     print("Done")
     test_string = "QUGUFLJIAFISSW-UHFFFAOYSA-N_QGZKDVFQNNGYKY-UHFFFAOYSA-N_RAHZWNYVWXNFOC-UHFFFAOYSA-N_AJKNNUJQFALRIK-UHFFFAOYSA-N"

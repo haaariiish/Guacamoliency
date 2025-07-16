@@ -42,16 +42,22 @@ def main():
     
     args = parser.parse_args()
 
+    # load the model and tokenizer
     tokenizer = AutoTokenizer.from_pretrained(args.model_dir)
     tokenizer.model_max_length += 1 
     model = AutoModelForCausalLM.from_pretrained(args.model_dir)
+
+    # need to be in the eval mode to avoid dropout
     model.eval()
+
+    # load the dataset and filter it to only keep strings
     dataset = pd.read_csv(args.dataset)["SMILES"].to_list()
     dataset = [k for k in dataset if isinstance(k,str)]
 
-    counting = [0] * len(tokenizer)
-    total_scoring = [0] * tokenizer.model_max_length
-    counting_occurences = [0] * tokenizer.model_max_length
+    
+    counting = [0] * len(tokenizer) # use to count the number of times a token is chosen as the best one by saliency score
+    total_scoring = [0] * tokenizer.model_max_length # count what tokens are the best rated by saliency according to their distance to the generated token
+    counting_occurences = [0] * tokenizer.model_max_length 
     sf = torch.nn.Softmax(1)
     sf2 = torch.nn.Softmax(0)
     saliency = Saliency(partial(forward_func, model=model))
@@ -83,15 +89,20 @@ def main():
 
                 target_ids = tokenizer.convert_tokens_to_ids(args.verified_token)
                 
+                # attribution is a matrix of shape [1, sequence_length, vocab_size] , and a approximated value of the gradient of the ideal output target_ids
+                # with respect to the input embeddings
                 attributions = saliency.attribute(inputs_embeds, target=target_ids, abs=True)
+                #we get the score by summing attributions 
                 scores = attributions.sum(dim=-1).squeeze()
                 tokens = tokenizer.convert_ids_to_tokens(input_ids[0])
 
 
             try:
+                # we search for the token with the maximum score 
                 max_arg = input_ids[0][scores[:len(scores)-args.threshold].argmax()].item()
+                # we count the number of times this token is chosen as the best one by saliency score
                 counting[max_arg] += 1
-                normalized_scores = sf2(scores)
+                normalized_scores = sf2(scores) #we normalize the scores to have a sum of 1
                 for i in range(len(normalized_scores)):
                     total_scoring[len(normalized_scores)-i-1] += normalized_scores[i]
                     counting_occurences[len(normalized_scores)-i-1] += 1

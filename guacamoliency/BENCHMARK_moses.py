@@ -24,30 +24,38 @@ def main():
 
     df = pd.read_csv(args.input_dir)
     dataset = df["SMILES"].to_list()
-
+    # Remove non-string entries from the dataset
     dataset = [k for k in dataset if isinstance(k,str)]
     
-
+    # get data length
     data_length = len(dataset)
     try:
-        metrics = moses.get_all_metrics(dataset,n_jobs = args.number_worker)
+        # Calculate metrics using Moses
+        # If the dataset is too large, it may raise a ValueError
+        metrics = moses.get_all_metrics(dataset,n_jobs = args.number_worker,device = "cuda")
+        
     except ValueError as e:
         print("Error in calculating metrics:", e)
+        #reduce the dataset size if it is too large
         if data_length>10000:
             print("the length of the dataset is maybe too high, please reduce the number of SMILES in the dataset")
             dataset = sample(dataset,10000)
-            metrics = moses.get_all_metrics(dataset,n_jobs = args.number_worker)
+            metrics = moses.get_all_metrics(dataset,device = "cuda",n_jobs = args.number_worker)
     except Exception as e:
         print("An unexpected error occurred:", e)
         metrics = {}
     print(metrics)
+    # Add model name and sample length to the metrics
     metrics["model_name"] = args.model_name
     metrics["sample length"] = data_length
-
+    
+    # Save the metrics to a CSV file
+    # If the file already exists, append the new metrics
     try :
         benchmark_file = pd.read_csv(args.output_dir)
         benchmark_file=pd.concat([benchmark_file,pd.DataFrame.from_dict([metrics])],ignore_index=True)
     except Exception as e:
+        # If it does not exist, create a new file with the metrics
         print(e)
         benchmark_file = pd.DataFrame.from_dict([metrics])
     
