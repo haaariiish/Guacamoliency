@@ -1,7 +1,0 @@
-model_name,sample length,valid,unique@1000,unique@10000,FCD/Test,SNN/Test,Frag/Test,Scaf/Test,FCD/TestSF,SNN/TestSF,Frag/TestSF,Scaf/TestSF,IntDiv,IntDiv2,Filters,logP,SA,QED,weight,Novelty
-MolGPT_moses_ClearSMILES_corrected_characterlevel_5,10000,,,,,,,,,,,,,,,,,,,
-MolGPT_moses_ClearSMILES_corrected_characterlevel_5_checkpoint_41200,9999,0.0002000200020001,1.0,1.0,51.00495679925383,0.1634482778608799,0.0,,51.58146621871448,0.140909094363451,0.0,,0.3571428656578064,0.2645978603050769,1.0,2.641173905460205,0.229229918090023,0.4106149355485534,268.1789159160353,1.0
-MolGPT_moses_ClearSMILES_corrected_characterlevel_5_checkpoint_82400,10000,9.9999999999989e-05,1.0,1.0,,0.0454545468091964,0.0,,,0.0526315793395042,0.0,,0.0,0.0,1.0,2.2945034815475323,4.218275772317438,0.4091206831224186,290.20341591603534,1.0
-MolGPT_moses_ClearSMILES_corrected_characterlevel_5_checkpoint_123600,9999,0.0001000100010001,1.0,1.0,,0.25,0.0,,,0.1875,0.0,,0.0,0.0,1.0,2.0793370181287423,0.7152395862628822,0.3783431064591614,247.13841591603537,1.0
-MolGPT_moses_ClearSMILES_corrected_characterlevel_5_checkpoint_164800,10000,,,,,,,,,,,,,,,,,,,
-MolGPT_moses_ClearSMILES_corrected_characterlevel_5_checkpoint_206000,10000,,,,,,,,,,,,,,,,,,,
