@@ -1,8 +1,5 @@
 # Data
-/data/
-/models/
-/reports/
-/notebooks/
+
 
 # Mac OS-specific storage files
 .DS_Store
