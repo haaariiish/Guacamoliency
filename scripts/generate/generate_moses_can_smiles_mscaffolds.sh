@@ -1,1 +1,0 @@
-python guacamoliency/modeling/generate.py --model moses_canonical --model_dir 'models/trained_moses_canonical/3/final_model' --num_sequence 1000 --temperature 1 --output_dir 'data/generated/moses_canonical.csv'
