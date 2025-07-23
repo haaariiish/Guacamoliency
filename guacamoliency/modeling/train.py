@@ -11,6 +11,8 @@ def tokenize_func(examples, tokenizer,max_length):
         max_length=max_length
     )
 
+
+
 #function for tokenization of inchkey_encoding
 def tokenize_func2(examples, tokenizer,max_length):
     smiles = examples["inchkey_encoding"]
