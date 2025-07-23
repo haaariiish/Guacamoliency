@@ -59,21 +59,38 @@ Study of saliency map of MolGPT transformer for MOSES and Guacamol dataset
 
 --------
 
+# Environment installation
 
-## change in the folder 
+You can use the environment.yml file to build a conda environment as 
 
-guacamoliency/modeling/train.py 
+` conda create env -f "environment.yml" -n "guacamoliency_env" `
 
-notebooks/anaysis_vocab.ipynb
+# Unconditionnal Training script
 
-launch_training_moses.sh
+You can find the train.py file in guacamoliency/modeling folders.
 
-run.pbs
+Arguments : 
+- 
+- 
+- 
+- 
+# Unconditionnal Sampling script
+You can find the generate.py file in guacamoliency/modeling folders.
+Argparser : 
+- datasets : indicate only the name of your actual training, needed for the saves of your saves
+- dataset_dir : the exact path to your csv file of data 
+- log_dir : the path of the folder where you save your logs file
+- model_save_folder : the path of your model save folder
+- learning_rate : max learning rate for cosine learning rate
+- max_steps : how many steps of training
+- tokenizer_type : which type of tokenizer, you need to indicate "SELFIES", "blocksmiles" or "SMILES"
+- loss_fc : can be the classic cross entropy loss or a custom one. It has to be "Cross_Entropy"  or "Weighted_Cross_Entropy". 
 
-guacamoliency/generate_tokenizerBEP.py
+# Benchmark script
+The use of the benchmark script has to be done with an other conda environment or virtual environment with the molsets package installed.
 
-data/interim
-
-data/tokenizers
-
-how the workflow works
+Arguments : 
+- 
+- 
+- 
+- 
