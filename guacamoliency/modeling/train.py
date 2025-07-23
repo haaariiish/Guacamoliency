@@ -146,7 +146,7 @@ def main():
     parser.add_argument('--tokenizer_type',type=str,
                         help="type de tokenizer utilisé", required=True)
     
-    parser.add_argument('--loss_fc',type=str,default="Weighted_Cross_Entropy" ,
+    parser.add_argument('--loss_fc',type=str,default="Cross_Entropy" ,
                         help="loss function used during training", required=False)
 
     args = parser.parse_args()
