@@ -7,7 +7,7 @@ import argparse
 def conversion(liste_tokens):
     merge = ""
     for k in liste_tokens:
-        merge += k
+        merge += k+" "
     return merge
 
 
@@ -51,11 +51,10 @@ def main():
     model.generation_config.pad_token_id = tokenizer.pad_token_id
     model.generation_config.eos_token_id = tokenizer.eos_token_id
     model.generation_config.bos_token_id = tokenizer.bos_token_id
-    for k in range(args.num_sequence):
-        outputs = model.generate(tokens["input_ids"], max_new_tokens=tokenizer.model_max_length //2+1 , do_sample=True, top_k=50, top_p=0.95, attention_mask=tokens["attention_mask"])
+    for k in tqdm(range(args.num_sequence)):
+        outputs = model.generate(tokens["input_ids"], max_new_tokens=tokenizer.model_max_length -len(tokens["input_ids"]) -2, do_sample=True, top_k=50, top_p=0.95, attention_mask=tokens["attention_mask"])
         outputs_list.append(tokenizer.batch_decode(outputs[0][len(tokens["input_ids"][0]):len(outputs[0])-1], skip_special_tokens=False))
         #outputs_list.append(tokenizer.batch_decode(outputs, skip_special_tokens=True))
-        
     outputs_list = [conversion(k) for k in outputs_list]
     df_exit["SMILES"] = outputs_list
     df_exit["SCAFFOLDS"] = inputs_list

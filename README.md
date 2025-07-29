@@ -63,7 +63,7 @@ Study of saliency map of MolGPT transformer for MOSES and Guacamol dataset
 
 You can use the environment.yml file to build a conda environment as 
 
-` conda create env -f "environment.yml" -n "guacamoliency_env" `
+` conda env create -f "environment.yml" -n "guacamoliency_env" `
 
 # Unconditionnal Training script
 
