@@ -18,6 +18,7 @@ def main(
 
     parser.add_argument('--input_dir',type=str,default="data/training_data/blocksmiles_simple.csv",
                         required=False)
+    parser.add_argument('--conditional',action="store_true",default=False)
     args = parser.parse_args()
    
 
@@ -58,7 +59,8 @@ def main(
         ]
     )
         
-
+    if args.conditional:
+        model_max_lenght = 2*model_max_lenght + 3
     #PreTrainedTokenizerFast
     fast_tokenizer = PreTrainedTokenizerFast(tokenizer_object=tokenizer)
     fast_tokenizer.pad_token = "<pad>"
@@ -68,11 +70,20 @@ def main(
     fast_tokenizer.model_max_length = model_max_lenght
 
     # Save the tokenizer and test it in a basic way
-    fast_tokenizer.save_pretrained("data/tokenizers_blocksmiles/moses_canonical")
+    if args.conditional:
+        fast_tokenizer.save_pretrained("data/tokenizers_blocksmiles/moses_canonical_conditional")
+    else :
+        fast_tokenizer.save_pretrained("data/tokenizers_blocksmiles/moses_canonical")
     print("Done")
-    test_string = 'C1-C=C-C=C-C=1_C1=C-N2-C(-O-1)=N-C1=C-2-C(=O)-N(-C(=O)-N-1-C)_C-C_C-C'
-    encoded = fast_tokenizer.encode(test_string)
-    decoded = fast_tokenizer.decode(encoded)
+    if args.conditional: 
+        test = "C1=C-N2-C(-O-1)=N-C1=C-2-C(=O)-N(-C(=O)-N-1-C)"
+        test_string = 'C1-C=C-C=C-C=1_C1=C-N2-C(-O-1)=N-C1=C-2-C(=O)-N(-C(=O)-N-1-C)_C-C_C-C'
+        encoded = fast_tokenizer.encode(test,test_string)
+        decoded = fast_tokenizer.decode(encoded)
+    else:
+        test_string = 'C1-C=C-C=C-C=1_C1=C-N2-C(-O-1)=N-C1=C-2-C(=O)-N(-C(=O)-N-1-C)_C-C_C-C'
+        encoded = fast_tokenizer.encode(test_string)
+        decoded = fast_tokenizer.decode(encoded)
 
     print("Input:", test_string)
     print("Encoded IDs:", encoded)

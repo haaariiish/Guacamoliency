@@ -40,6 +40,8 @@ def main():
     
 
     
+
+    
     args = parser.parse_args()
 
     
@@ -68,8 +70,11 @@ def main():
         return_dict_in_generate = True,
     )
     #print(generated_ids.keys())
+        if "blocksmiles" in args.model_dir : 
+            generated_smiles = [tokenizer.decode(output, skip_special_tokens=(not mscaffolds)) for output in generated_ids['sequences']]
     # Decode generated sequences from id to SMILES or SELFIES
-        generated_smiles = [tokenizer.decode(output, skip_special_tokens=(not mscaffolds)).replace(" ","") for output in generated_ids['sequences']]
+        else :
+            generated_smiles = [tokenizer.decode(output, skip_special_tokens=(not mscaffolds)).replace(" ","") for output in generated_ids['sequences']]
 
     smiles_set = pd.DataFrame()
 

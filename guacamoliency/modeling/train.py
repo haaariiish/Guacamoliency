@@ -220,7 +220,7 @@ def main():
         print("Idf built")
 
     #check if cuda is available and set the model to the good device
-    print("Is cuda/gpu available : ")
+    print("Is cuda/gpu available? : ")
     print(torch.cuda.is_available())
     if torch.cuda.is_available(): 
         model.to("cuda")
@@ -230,6 +230,7 @@ def main():
             idf = idf.to("cuda")
     else :
         raise Exception("Install correctly CUDA or check your drivers")
+    print("model device is :")
     print(model.device)
     
     
