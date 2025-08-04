@@ -229,19 +229,15 @@ def main():
             print("Change of device for idf done")
             idf = idf.to("cuda")
     else :
-        raise Exception("Install correctly CUDA or check your drivers")
+        
+        model.to("cpu")
+        #raise Exception("Install correctly CUDA or check your drivers")
     print("model device is :")
     print(model.device)
     
     
     #Construction of valid log and model saving folder if it's already exist
-    model_save_folder = args.model_save_folder + "_" + args.tokenizer_type
-    id_save = 1
-    while os.path.isdir(os.getcwd() + "/"+model_save_folder +"/"+ str(id_save)):
-        id_save +=1
-    model_save_folder = model_save_folder+"/"+str(id_save)
-    log_dir_end = args.datasets + "_" + args.tokenizer_type +"/"+ str(id_save)
-    os.makedirs(model_save_folder, exist_ok=True)
+    os.makedirs(args.model_save_folder, exist_ok=True)
     if args.loss_fc == "Weighted_Cross_Entropy":
         criterion = WeightedLanguageModelLoss(vocab_weights=idf)
         print("cross-entropy weighted function done")
@@ -249,7 +245,7 @@ def main():
 
     #training arguments
     training_args = TrainingArguments(
-            output_dir = model_save_folder,
+            output_dir = args.model_save_folder,
             
             learning_rate=args.learning_rate,
             max_steps=args.max_steps,
@@ -257,7 +253,7 @@ def main():
             per_device_train_batch_size=args.batch_size,
             save_steps=args.save_steps,
             save_total_limit=args.save_total_limit,
-            logging_dir=f"{args.log_dir}/logs/"+log_dir_end,
+            logging_dir=args.log_dir,
             report_to="tensorboard",
             logging_first_step = 10,
             logging_strategy = "steps",
@@ -310,12 +306,12 @@ def main():
     trainer.train()
     
     #save the model and the tokenizer
-    trainer.save_model(model_save_folder+"/final_model")
+    trainer.save_model(args.model_save_folder)
     
     print("Data from this directory : " + args.dataset_dir)
     print("Tokenizer from this directory : " + args.tokenizer_path)
-    print("log files are in this directory : " + f"{args.log_dir}/logs/"+log_dir_end)
-    print("Model and checkpoint of training has been save in this directory : " + model_save_folder)
+    print("log files are in this directory : " + args.log_dir)
+    print("Model and checkpoint of training has been save in this directory : " + args.model_save_folder)
     print("END OF train.py")
 if __name__ == "__main__":
 
