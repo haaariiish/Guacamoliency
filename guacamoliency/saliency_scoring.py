@@ -21,16 +21,16 @@ def main():
 
     parser = argparse.ArgumentParser()
 
-    parser.add_argument('--model', type = str, default='moses_canonical_BEP',
+    parser.add_argument('--model', type = str, default='moses_canonical_CL',
                     help="on which datasets to use for the training", required=True)
     
-    parser.add_argument('--model_dir', type = str, default='models/trained_moses_canonical_BEP/2/final_model',
+    parser.add_argument('--model_dir', type = str, default='models/trained_moses_canonical_CL/5/final_model',
                         help="where is your model file", required=True)
     
-    parser.add_argument('--dataset', type = str, default='data/generated/moses_canonical_BEP_2.csv',
+    parser.add_argument('--dataset', type = str, default='data/generated/moses_canonical_CL_5.csv',
                         help="where is your generated data", required=True)
     
-    parser.add_argument('--output_dir', type = str, default='reports/data/moses_canonical_BEP/2',
+    parser.add_argument('--output_dir', type = str, default='reports/data/moses_canonical_CL/5',
                         help="where save our outputs", required=True)
 
     parser.add_argument('--threshold', type = int, default=0,

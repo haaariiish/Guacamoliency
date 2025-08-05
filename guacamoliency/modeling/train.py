@@ -155,8 +155,6 @@ def main():
     #configure tokenizer with the path given in the arguments, this has to be the path for the folder containing the tokenizer json files
     tokenizer = AutoTokenizer.from_pretrained(args.tokenizer_path)
 
-
-
     #load raw datasets containing the data for train our model (SMiles or SElfies)
     data_set = pd.read_csv(args.dataset_dir)
 
@@ -200,7 +198,7 @@ def main():
             n_head=args.n_head,
             resid_pdrop=args.resid_pdrop,
             embd_pdrop=args.embd_pdrop,
-            attn_pdrop=args.attn_pdrop
+            attn_pdrop=args.attn_pdrops
         )
 
     #the model and verification of GPU good usage
