@@ -6,6 +6,8 @@
 
 Study of saliency map of MolGPT transformer for MOSES and Guacamol dataset
 
+Supplementary study done for the following [paper](https://www.exemple.com](https://pubs.acs.org/doi/10.1021/acs.jcim.4c02261)
+
 ## Project Organization
 
 ```
