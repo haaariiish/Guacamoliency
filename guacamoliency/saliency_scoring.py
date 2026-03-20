@@ -52,7 +52,10 @@ def main():
 
     # load the dataset and filter it to only keep strings
     dataset = pd.read_csv(args.dataset)["SMILES"].to_list()
+    
     dataset = [k for k in dataset if isinstance(k,str)]
+    if len(dataset)>10000:
+        dataset = dataset[:10000]
 
     
     counting = [0] * len(tokenizer) # use to count the number of times a token is chosen as the best one by saliency score
@@ -147,27 +150,28 @@ def main():
 
     dir_for_data = args.output_dir+"/saliency_according_distance_sample_length"+str(len(dataset))
 
-    if not os.path.exists(dir_for_data+".csv") or not os.path.exists(dir_for_data+".png"):
-        total_scoring = [(total_scoring[k]/counting_occurences[k]).item() if counting_occurences[k]!=0 else total_scoring[k] for k in range(len(total_scoring)) ]
-        x_bins = [k for k in range(len(total_scoring))]
+    
+    total_scoring = [(total_scoring[k]/counting_occurences[k]).item() if counting_occurences[k]!=0 else total_scoring[k] for k in range(len(total_scoring)) ]
+    x_bins = [k for k in range(len(total_scoring))]
 
-        fig, ax = plt.subplots()
+    fig, ax = plt.subplots()
 
-        df = pd.DataFrame()
-        df["total_scores"] = total_scoring
-        df["occurences"] = counting_occurences
-        df.to_csv(dir_for_data+".csv")
+    df = pd.DataFrame()
+    df["total_scores"] = total_scoring
+    df["occurences"] = counting_occurences
+    df.to_csv(dir_for_data+".csv")
 
-        ax.plot(x_bins,total_scoring,label=args.model)
-        ax.set_ylabel('Mean of normalised score')
-        ax.set_xlabel('Distance to the generated token')
-        ax.set_title('Saliency of models according to the distance - token chosen : '+ args.verified_token)
-        ax.grid()
-        ax.legend()
+    ax.plot(x_bins,total_scoring,label=args.model)
+    ax.set_ylabel('Mean of normalised score')
+    ax.set_xlabel('Distance to the generated token')
+    ax.set_title('Saliency of models according to the distance - token chosen : '+ args.verified_token)
+    ax.grid()
+    ax.legend()
 
-        plt.savefig(dir_for_data+".png")  
-    else : 
-        print("les plots de saliency selon la distance existe déjà")
+    plt.savefig(dir_for_data+".png")  
+    if os.path.exists(dir_for_data+".csv") or os.path.exists(dir_for_data+".png"):
+        print("les plots de saliency existant ont été écrasé")
+
 
 if __name__ == "__main__":
     main()
