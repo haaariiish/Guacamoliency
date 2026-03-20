@@ -10,15 +10,12 @@ Study of saliency map of MolGPT transformer for MOSES and Guacamol dataset
 
 ```
 ├── LICENSE            <- Open-source license if one is chosen
-├── Makefile           <- Makefile with convenience commands like `make data` or `make train`
 ├── README.md          <- The top-level README for developers using this project.
 ├── data
 │   ├── external       <- Data from third party sources.
 │   ├── interim        <- Intermediate data that has been transformed.
 │   ├── processed      <- The final, canonical data sets for modeling.
 │   └── raw            <- The original, immutable data dump.
-│
-├── docs               <- A default mkdocs project; see www.mkdocs.org for details
 │
 ├── models             <- Trained and serialized models, model predictions, or model summaries
 │
@@ -54,8 +51,7 @@ Study of saliency map of MolGPT transformer for MOSES and Guacamol dataset
     │   ├── generate.py         <- Generate SMILES/SELFIES samples from a trained model
     │   ├── predict_scaffolds.py <- Scaffold-related inference/analysis (see script)
     │   └── train.py            <- Code to train models
-    │
-    └── plots.py                <- Code to create visualizations
+    
 ```
 
 --------
@@ -138,6 +134,7 @@ CLI arguments (from `modeling/generate.py`):
 The benchmark script is `guacamoliency/BENCHMARK_moses.py`.
 It requires an environment with the `molsets` package installed.
 
+<<<<<<< HEAD
 ## Benchmark inputs (from `BENCHMARK_moses.py`)
 
 Required:
