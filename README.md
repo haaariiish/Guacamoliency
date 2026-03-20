@@ -9,49 +9,35 @@ Study of saliency map of MolGPT transformer for MOSES and Guacamol dataset
 ## Project Organization
 
 ```
-├── LICENSE            <- Open-source license if one is chosen
-├── README.md          <- The top-level README for developers using this project.
+├── LICENSE
+├── README.md
 ├── data
-│   ├── external       <- Data from third party sources.
-│   ├── interim        <- Intermediate data that has been transformed.
-│   ├── processed      <- The final, canonical data sets for modeling.
-│   └── raw            <- The original, immutable data dump.
-│
-├── models             <- Trained and serialized models, model predictions, or model summaries
-│
-├── notebooks          <- Jupyter notebooks. Naming convention is a number (for ordering),
-│                         the creator's initials, and a short `-` delimited description, e.g.
-│                         `1.0-jqp-initial-data-exploration`.
-│
-├── pyproject.toml     <- Project configuration file with package metadata for 
-│                         guacamoliency and configuration for tools like black
-│
-├── references         <- Data dictionaries, manuals, and all other explanatory materials.
-│
-├── reports            <- Generated analysis as HTML, PDF, LaTeX, etc.
-│   └── figures        <- Generated graphics and figures to be used in reporting
-│
-├── requirements.txt   <- The requirements file for reproducing the analysis environment, e.g.
-│                         generated with `pip freeze > requirements.txt`
-│
-├── setup.cfg          <- Configuration file for flake8
-│
-└── guacamoliency   <- Source code for use in this project.
-    │
-    ├── __init__.py             <- Makes guacamoliency a Python module
-    │
-    ├── config.py               <- Store useful variables and configuration
-    │
-    ├── dataset.py              <- Scripts to download or generate data
-    │
-    ├── features.py             <- Code to create features for modeling
-    │
-    ├── modeling                
-    │   ├── __init__.py 
-    │   ├── generate.py         <- Generate SMILES/SELFIES samples from a trained model
-    │   ├── predict_scaffolds.py <- Scaffold-related inference/analysis (see script)
-    │   └── train.py            <- Code to train models
-    
+├── env_file
+├── guacamoliency
+│   ├── __init__.py
+│   ├── BENCHMARK_moses.py
+│   ├── config.py
+│   ├── dataset.py
+│   ├── frequencies_of_precedent_tokens.py
+│   ├── generate_blocksmiles_tokenizer.py
+│   ├── generate_character_based_tokenizer.py
+│   ├── generate_selfies_tokenizer.py
+│   ├── generate_tokenizerBEP.py
+│   ├── modeling
+│   │   ├── __init__.py
+│   │   ├── generate.py
+│   │   ├── predict_scaffolds.py
+│   │   ├── train.py
+│   │   └── trainer.py
+│   ├── plots.py
+│   ├── saliency_pair_coherence.py
+│   └── saliency_scoring.py
+├── models
+├── notebooks
+├── pyproject.toml
+├── references
+├── reports
+└── scripts
 ```
 
 --------
@@ -61,6 +47,16 @@ Study of saliency map of MolGPT transformer for MOSES and Guacamol dataset
 You can use the environment.yml file to build a conda environment as 
 
 ` conda env create -f "environment.yml" -n "guacamoliency_env" `
+
+## Pipeline (tokenizer -> train -> génération)
+
+1. Choose and run a tokenizer generator (one of the scripts `guacamoliency/generate_*_tokenizer*.py`). It saves a tokenizer into a reusable folder.
+2. Start training with `guacamoliency/modeling/train.py`, pointing `--tokenizer_path` to the folder created in step 1.
+3. Generate samples with `guacamoliency/modeling/generate.py`, pointing `--model_dir` to the trained model folder and `--output_dir` to the output CSV.
+4. Analyze generated samples (token statistics + saliency):
+   - `guacamoliency/frequencies_of_precedent_tokens.py` (inputs: generated CSV via `--dataset`, must contain a `SMILES` column; outputs plots/csv to `--output_dir`).
+   - `guacamoliency/saliency_scoring.py` (inputs: `--model_dir` + generated CSV via `--dataset` with `SMILES`; outputs figures/csv to `--output_dir`).
+   - `guacamoliency/saliency_pair_coherence.py` (inputs: `--model_dir` + generated CSV via `--dataset` with `SMILES`; optional pair tokens + `--threshold`; outputs csv to `--output_dir`).
 
 # Unconditionnal Training script
 
@@ -134,7 +130,6 @@ CLI arguments (from `modeling/generate.py`):
 The benchmark script is `guacamoliency/BENCHMARK_moses.py`.
 It requires an environment with the `molsets` package installed.
 
-<<<<<<< HEAD
 ## Benchmark inputs (from `BENCHMARK_moses.py`)
 
 Required:
@@ -154,3 +149,5 @@ Important implementation details:
   - metric columns returned by `moses.get_all_metrics(...)`
   - `model_name`
   - `sample length` (length after filtering non-string entries)
+
+
